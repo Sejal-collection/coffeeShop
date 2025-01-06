@@ -21,6 +21,7 @@ import PremiumBeans from "./Pages/PremiumBeans";
 import ForgetPassword from "./Pages/ForgetPassword";
 
 import ExpertBaristas from "./Pages/ExpertBaristas";
+import CozyAmbiance from "./Pages/CozyAmbiance";
 import Reviews from "./componets/Reviews";
 
 const AppContainer = styled.div`
@@ -57,6 +58,7 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/premiumbeans" element={<PremiumBeans />} />
               <Route path="/expertbaristas" element={<ExpertBaristas />} />
+              <Route path="/cozyambiance" element={<CozyAmbiance />} />
             </Routes>
           </ContentContainer>
           <Reviews />

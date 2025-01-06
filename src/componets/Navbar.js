@@ -258,6 +258,14 @@ function Navbar() {
             <Link to="/expertbaristas">Expert Baristas</Link>
           </NavLink>
 
+            {/* <!-- ------NavLink::::expertbaristas-------------------> */}
+            <NavLink
+            className={location.pathname === "/cozyambiance" ? "active" : ""}
+            whileHover={{ scale: 1.05 }}
+          >
+            <Link to="/cozyambiance">Cozy Ambiance</Link>
+          </NavLink>
+
           {/* <!-- ------NavLink:::::Contacts-------------------> */}
           <NavLink
             className={location.pathname === "/contact" ? "active" : ""}
@@ -352,6 +360,11 @@ function Navbar() {
             <MobileNavLink whileHover={{ scale: 1.02 }}>
               <Link to="/expertbaristas" onClick={toggleMenu}>
                 Expert Baristas
+              </Link>
+            </MobileNavLink>
+            <MobileNavLink whileHover={{ scale: 1.02 }}>
+              <Link to="/cozyambiance" onClick={toggleMenu}>
+              Cozy Ambiance
               </Link>
             </MobileNavLink>
             <MobileNavLink whileHover={{ scale: 1.02 }}>
