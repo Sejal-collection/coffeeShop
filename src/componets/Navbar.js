@@ -298,7 +298,7 @@ function Navbar() {
 
   return (
     <>
-      <NavbarContainer>
+      <NavbarContainer
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -308,89 +308,14 @@ function Navbar() {
           <img src="3817208_coffee_cup_drink_icon.png" alt="Logo" />
           <Link to="/">MsCafe</Link>
         </Logo>
-
-        <NavLinks>
-          {/* <!-- ------NavLink:::::Home-------------------> */}
-          <NavLink
-            className={location.pathname === "/" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/">Home</Link>
-          </NavLink>
-          {/* <!-- ------NavLink:::::Shop-------------------> */}
-          <NavLink
-            className={location.pathname === "/shop" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/shop">Shop</Link>
-          </NavLink>
-
-          {/* <!-- ------NavLink:::::About-------------------> */}
-          <NavLink
-            className={location.pathname === "/about" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/about">About</Link>
-          </NavLink>
-
-          {/* <!-- ------NavLink::::Testinomial-------------------> */}
-          <NavLink
-            className={location.pathname === "/testimonial" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/testimonial">Testimonial</Link>
-          </NavLink>
-          {/* <!-- ------NavLink::::Premium Beans-------------------> */}
-          <NavLink
-            className={location.pathname === "/premiumbeans" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/premiumbeans">Premium Beans</Link>
-          </NavLink>
-          {/* <!-- ------NavLink::::expertbaristas-------------------> */}
-          <NavLink
-            className={location.pathname === "/expertbaristas" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/expertbaristas">Expert Baristas</Link>
-          </NavLink>
-
-            {/* <!-- ------NavLink::::expertbaristas-------------------> */}
-            <NavLink
-            className={location.pathname === "/cozyambiance" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/cozyambiance">Cozy Ambiance</Link>
-          </NavLink>
-
-          {/* <!-- ------NavLink:::::Contacts-------------------> */}
-          <NavLink
-            className={location.pathname === "/contact" ? "active" : ""}
-            whileHover={{ scale: 1.05 }}
-          >
-            <Link to="/contact">Contact</Link>
-          </NavLink>
-
-          {isLoggedIn ? (
-            <>
-              <NavLink
-                className={location.pathname === "/profile" ? "active" : ""}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Link to="/profile">Profile</Link>
-
-
         <ul>
           <RightNav>
             {navItems.map((items) => {
               if (items.title === "Product") {
                 return (
-                  <NavLinks>
+                  <NavLinks key={items.id}>
                     <li
-                      key={items.id}
-                      className={
-                        location.pathname === items.path ? "active" : ""
-                      }
+                      className={location.pathname === items.path ? "active" : ""}
                       onMouseEnter={() => setproDropdown(true)}
                       onMouseLeave={() => setproDropdown(false)}
                     >
@@ -405,12 +330,9 @@ function Navbar() {
 
               if (items.title === "Stories") {
                 return (
-                  <NavLinks>
+                  <NavLinks key={items.id}>
                     <li
-                      key={items.id}
-                      className={
-                        location.pathname === items.path ? "active" : ""
-                      }
+                      className={location.pathname === items.path ? "active" : ""}
                       onMouseEnter={() => setosDropdown(true)}
                       onMouseLeave={() => setosDropdown(false)}
                     >
@@ -425,52 +347,27 @@ function Navbar() {
 
               if (items.title === "User") {
                 return (
-                  <NavLinks>
-                    {isLoggedIn ? (
-                      <>
-                        <li
-                          key={items.id}
-                          className={
-                            location.pathname === items.path ? "active" : ""
-                          }
-                          onMouseEnter={() => setusloginDropdown(true)}
-                          onMouseLeave={() => setusloginDropdown(false)}
-                        >
-                          <NavLink whileHover={{ scale: 1.05 }}>
-                            <Link>{items.title}</Link>
-                            {uslogindropdown && <UsLoginDropdown />}
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink whileHover={{ scale: 1.05 }}>
-                            <Link>{items.title}</Link>
-                            {uslogoutdropdown && <UsLogoutDropdown />}
-                          </NavLink>
-                        </li>
-                      </>
-                    ) : (
-                      <li
-                        key={items.id}
-                        className={
-                          location.pathname === items.path ? "active" : ""
+                  <NavLinks key={items.id}>
+                    <li
+                      className={location.pathname === items.path ? "active" : ""}
+                      onMouseEnter={() => setuslogoutDropdown(true)}
+                      onMouseLeave={() => setuslogoutDropdown(false)}
+                    >
+                      <NavLink whileHover={{ scale: 1.05 }}>
+                        <Link to="/cart">{items.title}</Link>
+                        {isLoggedIn ? 
+                          (uslogindropdown && <UsLoginDropdown />) :
+                          (uslogoutdropdown && <UsLogoutDropdown />)
                         }
-                        onMouseEnter={() => setuslogoutDropdown(true)}
-                        onMouseLeave={() => setuslogoutDropdown(false)}
-                      >
-                        <NavLink whileHover={{ scale: 1.05 }}>
-                          <Link>{items.title}</Link>
-                          {uslogoutdropdown && <UsLogoutDropdown />}
-                        </NavLink>
-                      </li>
-                    )}
+                      </NavLink>
+                    </li>
                   </NavLinks>
                 );
               }
 
               return (
-                <NavLinks>
+                <NavLinks key={items.id}>
                   <li
-                    key={items.id}
                     className={location.pathname === items.path ? "active" : ""}
                   >
                     <NavLink whileHover={{ scale: 1.05 }}>
@@ -481,11 +378,9 @@ function Navbar() {
               );
             })}
 
+            {/* Shop and other navigation items */}
             <NavLinks>
-              <NavLink className={location.pathname === "/" ? "active" : ""} whileHover={{ scale: 1.05 }}>
-                <Link to="/">Home</Link>
-
-              </NavLink>
+            
 
               <ShopLink className={location.pathname === "/shop" ? "active" : ""}>
                 <Link to="/shop">Shop</Link>
@@ -496,8 +391,12 @@ function Navbar() {
                   <Link to="/shop/milkshake">Milkshakes</Link>
                 </DropdownMenu>
               </ShopLink>
-
-              {/* removed unnecessary links that were already hidden and obsolete.  */}
+              <NavLink
+                className={location.pathname === "/faq" ? "active" : ""}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Link to="/faq">FAQ</Link>
+              </NavLink>
 
               {isLoggedIn && (
                 <>
@@ -517,7 +416,7 @@ function Navbar() {
                     whileHover={{ scale: 1.05 }}
                     onClick={() => {
                       handleLogout();
-                      setIsOpen(false); // Ensure mobile menu closes after logout
+                      setIsOpen(false);
                     }}
                     style={{ cursor: "pointer" }}
                   >
@@ -559,6 +458,11 @@ function Navbar() {
             <MobileNavLink whileHover={{ scale: 1.02 }}>
               <Link to="/about" onClick={toggleMenu}>
                 About
+              </Link>
+            </MobileNavLink>
+            <MobileNavLink whileHover={{ scale: 1.02 }}>
+              <Link to="/faq" onClick={toggleMenu}>
+                FAQ
               </Link>
             </MobileNavLink>
             <MobileNavLink whileHover={{ scale: 1.02 }}>
