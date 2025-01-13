@@ -117,13 +117,12 @@ body.menu-open {
   width: 100%;
   background: #2C130B; 
   z-index: 1000; 
-  padding: 15px 30px; /* Increase padding for a larger navbar */
+  padding: 10px 20px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
   display: flex;
-  justify-content: space-between; /* Space between logo and menu items */
+  justify-content: center;
   align-items: center;
   gap: 3rem;
-  font-size: 18px; /* Increase font size */
 ;
 }
 
@@ -150,14 +149,18 @@ body.menu-open {
   display: flex;
 }
 
-/*Deleting conflicting shop dropdown*/
-/*
+/*dropdown menu for shop*/
 .dropdown-menu {
   display: none;
   text-decoration: none;
+  /* position: absolute;
+  background: rgba(44, 19, 11, 0.95);
+  border: 2px solid #8B4513;
+  z-index: 1001;
+  border-radius: 8px; */
 }
 
 .nav-link:hover .dropdown-menu {
   display: flex;
 }
-*/
+

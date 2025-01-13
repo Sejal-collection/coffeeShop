@@ -3,12 +3,10 @@ import styled, { keyframes } from 'styled-components';
 
 const Loader = styled.div`
   background: linear-gradient(135deg, #FDF5E6, #FFE4B5);
-  height: 100vh;
+  height: 90vh;
   width: 100%;
   position:relative;
-  @media (max-width: 880px) {    
-      height: 1700px;
-  }
+
 `;
 
 
@@ -254,68 +252,19 @@ const CoffeeTapNozzle = styled.div`
     border-radius: 0%;
 `;
 const CardsContainer = styled.div`
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 500px;
+  display: flex;
   justify-content: space-between;
   width: 1000px;
-  @media (max-width: 1050px) {    
-    margin:0;
-    place-items: center;
-    gap: 340px;
-    
-  }
-  @media (max-width: 940px) {    
-    margin:0;
-    place-items: center;
-    gap: 250px;
-    
-  }
-  @media (max-width: 880px) {    
-    margin:0;
-    place-items: center;
-    top:800px;
-    grid-template-columns: 1fr;
-    
-  }
-  @media (max-width: 820px) {    
-    margin:0;
-    place-items: center;
-    top:800px;
-    grid-template-columns: 1fr;    
-  }
-  @media (max-width: 770px) {    
-    margin: 0;
-    place-items: center;
-    top:800px;
-    grid-template-columns: 1fr;    
-  }
-  @media (max-width: 600px) {    
-    margin: 0;
-    place-items: center;
-    top:800px;
-    grid-template-columns: 1fr;    
-  }
-  @media (max-width: 500px) {    
-    margin:0;
-    place-items: center;
-    top:800px;
-    grid-template-columns: 1fr;    
-  }
-  
 `;
 
 const CardColumn = styled.div`
-  display: flex;  
+  display: flex;
   flex-direction: column;
   gap: 40px;
-  @media (max-width: 880px) {        
-    margin-top:100px;    
-  }
 `;
 
 const Card = styled.div`
@@ -325,12 +274,6 @@ const Card = styled.div`
   flex-direction: column;
   align-items: center;
   background: transparent;
-  @media (max-width: 880px) {        
-    width: 480px;        
-  }
-  @media (max-width: 600px) {        
-    width: 240px;        
-  }
 `;
 
 const CardImage = styled.div`
@@ -413,8 +356,20 @@ function PremiumBeans() {
     },
   ];
   return (
-    <Loader >     
-        
+    <Loader >
+      <CardsContainer>
+        {/* Left cards */}
+        <CardColumn>
+          {beans.slice(0, 2).map((bean) => (
+            <Card key={bean.id}>
+              <CardImage style={{ backgroundImage: `url(${bean.image})` }} />
+              <CardContent>
+                <CardTitle>{bean.title}</CardTitle>
+                <CardDescription>{bean.description}</CardDescription>
+              </CardContent>
+            </Card>
+          ))}
+        </CardColumn>
     <Container>
       <CoffeeHeader>
         <CoffeeButtonOne />
@@ -445,22 +400,7 @@ function PremiumBeans() {
       <CoffeeFooter />
       <CoffeeFooterAfter />
     </Container>
-    
-    <CardsContainer>    
     <CardColumn>
-    {/* Left cards */}
-          {beans.slice(0, 2).map((bean) => (
-            <Card key={bean.id}>
-              <CardImage style={{ backgroundImage: `url(${bean.image})` }} />
-              <CardContent>
-                <CardTitle>{bean.title}</CardTitle>
-                <CardDescription>{bean.description}</CardDescription>
-              </CardContent>
-            </Card>
-          ))}
-    </CardColumn>
-    <CardColumn>
-    {/*Right Cards*/}
           {beans.slice(2).map((bean) => (
             <Card key={bean.id}>
               <CardImage style={{ backgroundImage: `url(${bean.image})` }} />
@@ -475,4 +415,5 @@ function PremiumBeans() {
     </Loader>
   );
 }
+
 export default PremiumBeans;
