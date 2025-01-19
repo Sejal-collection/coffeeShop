@@ -36,6 +36,12 @@ export const navItems = [
     path: "./user",
     cName: "nav-item",
   },
+  {
+    id: 7,
+    title: "Feedback",
+    path: "./feedback",
+    cName: "nav-item",
+  },
  
 ];
 

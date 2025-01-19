@@ -28,7 +28,7 @@ import ForgetPassword from "./Pages/ForgetPassword";
 import ExpertBaristas from "./Pages/ExpertBaristas";
 import Reviews from "./componets/Reviews";
 import AnimatedCursor from "react-animated-cursor";
-
+import Feedback from './Pages/Feedback';
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -76,6 +76,7 @@ function App() {
               <Route path="/shop/soup" element={<Soup />} />
               <Route path="/shop/milkshake" element={<Milkshakes />} />
               <Route path="/premiumbeans" element={<PremiumBeans />} />
+              <Route path="/feedback" element={<Feedback />} />
               <Route path="/expertbaristas" element={<ExpertBaristas />} />
             </Routes>
           </ContentContainer>
