@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+
 
 const FAQContainer = styled.div`
   padding: 6rem 2rem 4rem 2rem;
@@ -72,13 +73,22 @@ const Answer = styled(motion.p)`
   color: #6b4423;
   line-height: 1.6;
   font-family: 'Poppins', sans-serif;
-  max-height: 0;
+  max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')};
   overflow: hidden;
   transition: max-height 0.4s ease-out;
 `;
 
 function FAQ() {
+
+    const [openFAQ, setOpenFAQ] = useState(null);  {/* State to track open FAQ */}
+
+    const toggleFAQ = (faqId) => {
+       setOpenFAQ((prev) => (prev === faqId ? null : faqId));
+    };
+
+
   return (
+    
     <FAQContainer>
       <FAQHeading
         initial={{ opacity: 0, y: -50 }}
@@ -88,18 +98,14 @@ function FAQ() {
         Frequently Asked Questions (FAQs)
       </FAQHeading>
       <FAQContent>
+       
+
+     
         <FAQItem
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          onClick={() => {
-            const answer = document.getElementById('answer1');
-            if (answer.style.maxHeight) {
-              answer.style.maxHeight = null;
-            } else {
-              answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
-          }}
+          onClick={() => toggleFAQ(1)} // Pass a unique ID for each FAQ
         >
           <Question
             initial={{ opacity: 0, x: -50 }}
@@ -108,26 +114,15 @@ function FAQ() {
           >
             How do I place an order?
           </Question>
-          <Answer id="answer1"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            To place an order, browse our collection and click the 'Add to Cart' button. When you're ready, proceed to checkout.
-          </Answer>
+          <Answer isOpen={openFAQ === 1}> {/* Pass the isOpen prop */}
+           To place an order, browse our collection and click the 'Add to Cart' button. When you're ready, proceed to checkout.
+         </Answer>
         </FAQItem>
         <FAQItem
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          onClick={() => {
-            const answer = document.getElementById('answer2');
-            if (answer.style.maxHeight) {
-              answer.style.maxHeight = null;
-            } else {
-              answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
-          }}
+          onClick={() => toggleFAQ(2)}
         >
           <Question
             initial={{ opacity: 0, x: -50 }}
@@ -136,11 +131,7 @@ function FAQ() {
           >
             Can I modify my order after placing it?
           </Question>
-          <Answer id="answer2"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          <Answer isOpen={openFAQ === 2}>
             Unfortunately, once an order is placed, it cannot be modified. However, you can cancel it and place a new one if needed.
           </Answer>
         </FAQItem>
@@ -148,14 +139,7 @@ function FAQ() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          onClick={() => {
-            const answer = document.getElementById('answer3');
-            if (answer.style.maxHeight) {
-              answer.style.maxHeight = null;
-            } else {
-              answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
-          }}
+          onClick={() => toggleFAQ(3)}
         >
           <Question
             initial={{ opacity: 0, x: -50 }}
@@ -164,11 +148,7 @@ function FAQ() {
           >
             What payment methods do you accept?
           </Question>
-          <Answer id="answer3"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          <Answer isOpen={openFAQ === 3}>
             We accept various payment methods including credit cards, PayPal, and bank transfers.
           </Answer>
         </FAQItem>
@@ -176,14 +156,7 @@ function FAQ() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          onClick={() => {
-            const answer = document.getElementById('answer4');
-            if (answer.style.maxHeight) {
-              answer.style.maxHeight = null;
-            } else {
-              answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
-          }}
+          onClick={() => toggleFAQ(4)}
         >
           <Question
             initial={{ opacity: 0, x: -50 }}
@@ -192,11 +165,7 @@ function FAQ() {
           >
             How can I track my order?
           </Question>
-          <Answer id="answer4"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          <Answer isOpen={openFAQ === 4}>
             After your order is shipped, you will receive a tracking number via email to monitor your shipment.
           </Answer>
         </FAQItem>
