@@ -130,6 +130,10 @@ const SocialIcon = styled(motion.a)`
     color: #0077b5; /* LinkedIn Blue */
   }
 
+  &[href*="github.com"]:hover {
+    color: #1C2025; /* GitHub Black */
+  }
+
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
@@ -173,11 +177,11 @@ function Footer() {
           </SocialIcon>
 
           <SocialIcon
-            href="https://linkedin.com"
+            href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
-            aria-label="LinkedIn"
+            aria-label="Twitter"
             role="link">
             <i className="fab fa-twitter"></i>  {/* Twitter icon */}
           </SocialIcon>
