@@ -269,6 +269,7 @@ const CardsContainer = styled.div`
     gap: 340px;
     
   }
+  
   @media (max-width: 940px) {    
     margin:0;
     place-items: center;
@@ -319,18 +320,28 @@ const CardColumn = styled.div`
 `;
 
 const Card = styled.div`
-  width: 240px;
+  width: 250px;
   height: 280px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  background: transparent;
+  // background: transparent;
   @media (max-width: 880px) {        
     width: 480px;        
   }
   @media (max-width: 600px) {        
     width: 240px;        
   }
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.01);
+  }
+  border-radius: 5%;
+  background: #fff;
+  padding: 10px;
+  overflow: hidden;
 `;
 
 const CardImage = styled.div`
@@ -341,35 +352,45 @@ const CardImage = styled.div`
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  // margin-bottom: 10px;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    
   }
+  border-bottom: 1px solid #eee;
 `;
 
 const CardContent = styled.div`
   margin-top: 20px;
   text-align: center;
   font-family: "Arial", sans-serif;
+  // padding: 0 10px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  flex-grow: 1;
 `;
 
 const CardTitle = styled.h3`
-  font-size: 18px;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   margin: 0;
 `;
 
 const CardDescription = styled.p`
-  font-size: 14px;
+  font-size: 1rem;
   color: #666;
   margin: 5px 0 0;
 `;
 
 const LearnMoreButton = styled.button`
-  align-self: flex-start;
-  padding: 8px 16px;
+  // align-self: flex-start;
   font-size: 14px;
   font-weight: bold;
   color: #fff;
@@ -377,10 +398,44 @@ const LearnMoreButton = styled.button`
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background: #349f90;
+    background: #2d8f8e;;
+    transform: translateY(-3px);
+  }
+  &:active {
+    transform: translateY(1px);
+    background: #1e7c7a;
+  }
+  margin-top: 5px;
+  // margin-bottom: 16px; 
+  padding: 10px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+`;
+
+const BuyNowButton = styled.button`
+  margin-top: 5px;
+  margin-bottom: 16px; 
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background: #ff6f61;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background: #ff4b39;
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    background: #e84331;
   }
 `;
 
@@ -455,6 +510,7 @@ function PremiumBeans() {
               <CardContent>
                 <CardTitle>{bean.title}</CardTitle>
                 <CardDescription>{bean.description}</CardDescription>
+                <BuyNowButton>Buy Now</BuyNowButton>
               </CardContent>
             </Card>
           ))}
@@ -467,6 +523,7 @@ function PremiumBeans() {
               <CardContent>
                 <CardTitle>{bean.title}</CardTitle>
                 <CardDescription>{bean.description}</CardDescription>
+                <BuyNowButton>Buy Now</BuyNowButton>
               </CardContent>
             </Card>
           ))}
