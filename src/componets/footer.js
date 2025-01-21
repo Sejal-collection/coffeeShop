@@ -249,6 +249,53 @@ function Footer() {
             <h3>Contact Us</h3>
             <p><a href="mailto:contact@mscafe.com">✉️ contact@mscafe.com</a></p>
             <p><a href="tel:+11234567890">☎️ (123) 456-7890</a></p>
+            <h3>We Accept</h3>
+            <SocialIcons>
+            <SocialIcon
+            href="https://www.apple.com/apple-pay/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ scale: 2.6 }}
+            whileHover={{ scale: 3.2 }}     
+            aria-label="apple Pay"
+            role="link"
+          >
+            <i className="fa-brands fa-apple-pay"></i> {/* applePay icon */}
+          </SocialIcon>
+          <SocialIcon
+            href="https://pay.google.com/intl/en_in/about/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ scale: 2.6 }}
+            whileHover={{ scale: 3.2 }}
+            aria-label="G Pay"
+            role="link"
+          >
+            <i className="fa-brands fa-google-pay"></i> {/* GPay icon */}
+          </SocialIcon>
+          <SocialIcon
+            href="https://redemption.mastercard.com/#/user/login?language=en-US"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ scale: 2.2 }}
+            whileHover={{ scale: 3.2 }}   
+            aria-label="Mastercard"
+            role="link"
+          >
+            <i className="fa-brands fa-cc-mastercard"></i> {/* Mastercard icon */}
+          </SocialIcon>
+          <SocialIcon
+            href="https://www.visa.com.au/en_au/account/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ scale: 2.2 }}
+            whileHover={{ scale: 3.2 }}
+            aria-label="Visa"     
+            role="link"
+          >
+            <i className="fa-brands fa-cc-visa"></i> {/* Visa icon */}
+          </SocialIcon>
+          </SocialIcons>
           </InfoColumn>
           <InfoColumn>
             <h3>Location</h3>
