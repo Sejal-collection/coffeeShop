@@ -6,7 +6,7 @@ function Testimonial() {
     <>
       <div className="testimonial">
         <div className="container">
-          <h1>What Our Customers Say</h1>
+          <h1 className='heading'>What Our Customers Say</h1>
           <div className="carousel-container">
             <div
               id="carouselExampleSlidesOnly"
@@ -80,8 +80,7 @@ function Testimonial() {
                 className="carousel-control-prev"
                 type="button"
                 data-bs-target="#carouselExampleSlidesOnly"
-                data-bs-slide="prev"
-              >
+                data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span className="visually-hidden">Previous</span>
               </button>
@@ -102,24 +101,28 @@ function Testimonial() {
 }
 
 function TestimonialCard({ name, image, rating, text }) {
-  
   return (
-    
     <div className="single">
-      <div className="image">
-        <img src={image} alt={name} />
-      </div>
-      <div className="image-text">
-        <h2>{name}</h2>
-        <p>{rating}</p>
-        <p>{text}</p>
+      <div className="card-inner">
+        <div className="front">
+          <div className="image">
+            <img src={image} alt={name} />
+          </div>
+          <div className="image-text">
+            <br />
+            <br />
+            <h2 className='name'>{name}</h2>
+            <br />
+            <p>{rating}</p>
+          </div>
+        </div>
+        <div className="back">
+          <p className='content'>{text}</p>
+        </div>
       </div>
     </div>
   );
 }
 
+
 export default Testimonial;
-
-
-
-
