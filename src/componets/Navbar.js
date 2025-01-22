@@ -129,7 +129,7 @@ const NavLink = styled(motion.div)`
     font-size: 1.1rem;
     transition: all 0.3s ease;
     font-family: "Poppins", sans-serif;
-    padding: 25px;
+padding: 20px;
 
     &:hover {
       color: #ffe4b5;
@@ -344,7 +344,7 @@ function Navbar() {
                   </NavLinks>
                 );
               }
-
+                
               if (items.title === "User") {
                 return (
                   <NavLinks key={items.id}>
@@ -359,6 +359,18 @@ function Navbar() {
                           (uslogindropdown && <UsLoginDropdown />) :
                           (uslogoutdropdown && <UsLogoutDropdown />)
                         }
+                      </NavLink>
+                    </li>
+                  </NavLinks>
+                );
+              }
+              
+              if(items.title === "Feedback"){
+                return(
+                  <NavLinks key={items.id}>
+                    <li className={location.pathname === items.path ? "active": ""}>
+                      <NavLink whileHover={{scale:1.05}}>
+                        <Link to="/feedback">{items.title}</Link>
                       </NavLink>
                     </li>
                   </NavLinks>
@@ -488,6 +500,11 @@ function Navbar() {
             <MobileNavLink whileHover={{ scale: 1.02 }}>
               <Link to="/contact" onClick={toggleMenu}>
                 Contact
+              </Link>
+            </MobileNavLink>
+            <MobileNavLink whileHover={{ scale: 1.02 }}>
+              <Link to="/feedback" onClick={toggleMenu}>
+                Feedback
               </Link>
             </MobileNavLink>
             {isLoggedIn ? (

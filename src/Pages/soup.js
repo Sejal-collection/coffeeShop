@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../Store/cartSlice';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const SoupContainer = styled.div`
   padding: 6rem 2rem 4rem 2rem; // Added top padding for navbar
@@ -136,6 +137,15 @@ const QuantityDisplay = styled.span`
 function Soup() {
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState({});
+  const [searchQuery, setSearchQuery] = useState('');
+  const [likedProducts, setLikedProducts] = useState({});
+
+  const toggleHeart = (productId) => {
+    setLikedProducts((prevState) => ({
+      ...prevState,
+      [productId]: !prevState[productId],
+    }));
+  };
 
   const handleAddToCart = (product) => {
     if (!quantities[product.id]) {
@@ -243,7 +253,26 @@ function Soup() {
       <ProductGrid>
         {products.map((product) => (
           <ProductCard key={product.id}>
-            <ProductImage src={product.image} alt={product.name} />
+            <div style={{ position: 'relative' }}>
+              <ProductImage src={product.image} alt={product.name} />
+              
+              <div
+                onClick={() => toggleHeart(product.id)} 
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  cursor: 'pointer',
+                  fontSize: '24px',
+                  color: likedProducts[product.id] ? 'red' : 'gray',
+                }}
+              >
+                <i
+                  className={`fa-heart ${likedProducts[product.id] ? 'fas' : 'far'
+                    }`}
+                ></i>
+              </div>
+            </div>
             <ProductInfo>
               <ProductName>{product.name}</ProductName>
               <ProductPrice>${product.price.toFixed(2)}</ProductPrice>
@@ -251,7 +280,7 @@ function Soup() {
                 <Button onClick={() => handleAddToCart(product)}>
                   Add to Cart
                 </Button>
-            
+
               ) : (
                 <QuantityControls>
                   <QuantityButton onClick={() => handleDecrement(product)}>-</QuantityButton>
@@ -267,5 +296,6 @@ function Soup() {
     </SoupContainer>
   );
 }
+
 
 export default Soup;
