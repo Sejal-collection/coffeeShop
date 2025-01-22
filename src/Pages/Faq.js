@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-
 
 const FAQContainer = styled.div`
   padding: 6rem 2rem 4rem 2rem;
@@ -16,7 +15,7 @@ const FAQHeading = styled(motion.h1)`
   margin-bottom: 2rem;
   text-align: center;
   color: #78350f;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -55,7 +54,7 @@ const FAQItem = styled(motion.div)`
   &:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-    background-color:rgb(241, 224, 198)/* Coffee color */
+    background-color: rgb(241, 224, 198); /* Coffee color */
   }
 `;
 
@@ -63,9 +62,13 @@ const Question = styled(motion.h3)`
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: #78350f;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   cursor: pointer;
   font-weight: 550;
+  display: flex;
+  align-items: center; /* Aligns text and arrow horizontally */
+  justify-content: space-between; /* Distributes space between question text and arrow */
+  width: 100%; /* Ensure the question occupies full width */
 `;
 
 const Answer = styled(motion.p)`
@@ -78,15 +81,16 @@ const Answer = styled(motion.p)`
   transition: max-height 0.4s ease-out;
 `;
 
+const ArrowIcon = styled.div`
+  font-size: 2rem; /* Ensures arrow is large enough */
+  transition: transform 1s ease;
+  transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(180deg)")};
+  margin-left: 1rem;
+  display: inline-block;
+  vertical-align: middle;
+`;
+
 function FAQ() {
-
-    const [openFAQ, setOpenFAQ] = useState(null);  {/* State to track open FAQ */}
-
-    const toggleFAQ = (faqId) => {
-       setOpenFAQ((prev) => (prev === faqId ? null : faqId));
-    };
-
-
   return (
     
     <FAQContainer>
@@ -98,14 +102,11 @@ function FAQ() {
         Frequently Asked Questions (FAQs)
       </FAQHeading>
       <FAQContent>
-       
-
-     
         <FAQItem
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          onClick={() => toggleFAQ(1)} // Pass a unique ID for each FAQ
+          onClick={() => toggleFAQ(1)}
         >
           <Question
             initial={{ opacity: 0, x: -50 }}
@@ -115,8 +116,9 @@ function FAQ() {
             How do I place an order?
           </Question>
           <Answer isOpen={openFAQ === 1}> {/* Pass the isOpen prop */}
-           To place an order, browse our collection and click the 'Add to Cart' button. When you're ready, proceed to checkout.
-         </Answer>
+          To place an order, browse our collection and click the 'Add to Cart' button. When you're ready, proceed to checkout.
+        </Answer>
+
         </FAQItem>
         <FAQItem
           initial={{ opacity: 0, y: 50 }}
