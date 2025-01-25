@@ -763,9 +763,13 @@ function Shop() {
         variant="text"
         aria-label="Basic button group"
         sx={{
+          display:'flex',
+          alignItems:'center', //to align buttons in center
+          flexDirection:{xs:'column',sm:'column',md:'row'}, //to make button group adjust to different screen size
+          justifyContent:'center', 
           borderRadius: "8px",
           padding: "4px",
-          marginLeft: "230px",
+          
         }}
       >
         <Button
