@@ -168,6 +168,7 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterContent>
+
         {/* Social Icons */}
         <SocialIcons>
 
@@ -240,7 +241,7 @@ function Footer() {
               farms across the globe.
             </p>
           </InfoColumn>
-          <InfoColumn>
+          <InfoColumn  >
             <h3>Quick Links</h3>
             <Link to="/">Home</Link>
             <Link to="/shop">Shop</Link>

@@ -14,15 +14,12 @@ const MilkshakeContainer = styled.div`
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, max-content)); ));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1100px; // Slightly reduced to center content more
   margin: 0 auto;
-  justify-content: center;
- 
 `;
 const ProductCard = styled(motion.div)`
-max-width:345 px;
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
   border-radius: 10px;
   overflow: hidden;
@@ -313,11 +310,7 @@ function Milkshake() {
             description:
               "Rich and creamy, made with peanut butter, ice cream, and milk, a peanut butter lover's dream.",
           },
-          
 ];
-const filteredProducts = products.filter((product) =>
-  product.name.toLowerCase().includes(searchQuery.toLowerCase())
-);
 
   return (
     <MilkshakeContainer>
@@ -326,23 +319,10 @@ const filteredProducts = products.filter((product) =>
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Milkshake Selection
+         Our Milkshake Selection
         </Title>
-        <SearchFilterContainer>
-        <div>
-      <SearchInput
-    type="text"
-    placeholder="Search for milkshakes..."
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-  />
-  <SearchButton onClick={() => console.log("Search clicked!")}>
-    Search
-  </SearchButton>
-  </div>
-  </SearchFilterContainer>
       <ProductGrid>
-        {filteredProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product.id}>
             <div style={{ position: 'relative' }}>
               <ProductImage src={product.image} alt={product.name} />

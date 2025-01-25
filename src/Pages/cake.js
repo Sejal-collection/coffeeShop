@@ -18,15 +18,13 @@ const CakeContainer = styled.div`
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1100px;
   margin: 0 auto;
-  justify-content: center;
 `;
 
 const ProductCard = styled(motion.div)`
-max-width:345 px;
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
   border-radius: 10px;
   overflow: hidden;
@@ -251,10 +249,7 @@ function Cake() {
       description: "Light and fluffy, a sweet strawberry cake with creamy frosting, perfect for summer.",
     },
   ];
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  
+
   return (
     <CakeContainer>
 
@@ -284,7 +279,7 @@ function Cake() {
   </SearchFilterContainer>
 
       <ProductGrid>
-        {filteredProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product.id}>
             <div style={{ position: 'relative' }}>
               <ProductImage src={product.image} alt={product.name} />

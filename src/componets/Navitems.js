@@ -8,30 +8,24 @@ export const navItems = [
   },
   {
     id: 2,
-    title: "About",
-    path: "./About",
-    cName: "nav-item",
-  },
-  {
-    id: 3,
     title: "Product",
     path: "./product",
     cName: "nav-item",
   },
   {
-    id: 4,
+    id: 3,
     title: "Contact",
     path: "./contact",
     cName: "nav-item",
   },
   {
-    id: 5,
+    id: 4,
     title: "Stories",
     path: "./our-story",
     cName: "nav-item",
   },
   {
-    id: 6,
+    id: 5,
     title: "User",
     path: "./user",
     cName: "nav-item",
@@ -45,39 +39,46 @@ export const navItems = [
  
 ];
 
-export const productDropdown = [
-  {
-    id: 1,
-    title: "Shop",
-    path: "./shop",
-    cName: "submenu-item",
-  },
+export const productDropdown =[
+    {
+        id:1,
+        title:"Shop",
+        path:"./shop",
+        cName:"submenu-item",
+    },
 
-  {
-    id: 2,
-    title: "Premium Beans",
-    path: "./premiumBeans",
-    cName: "submenu-item",
-  },
+    {
+        id:2,
+        title:"Premium Beans",
+        path:"./premiumBeans",
+        cName:"submenu-item",
+    },
 
-  {
-    id: 3,
-    title: "Expert Baristas",
-    path: "./expertbaristas",
-    cName: "submenu-item",
+    {
+        id:3,
+        title:"Expert Baristas",
+        path:"./expertbaristas",
+        cName:"submenu-item",
+    },
+
+    {
+      id:4,
+      title:"Cozy Ambiance",
+      path:"./cozyambiance",
+      cName:"submenu-item",
   },
 ];
 
 export const ourstoryDropdown = [
   {
     id: 1,
-    title: "About",
+    title: "about",
     path: "./about",
     cName: "submenu-item",
   },
   {
     id: 2,
-    title: "Testimonials",
+    title: "testimonials",
     path: "./testimonial",
     cName: "submenu-item",
   },
@@ -86,13 +87,13 @@ export const ourstoryDropdown = [
 export const userLogoutDropdown = [
   {
     id: 1,
-    title: "Login",
+    title: "login",
     path: "./login",
     cName: "submenu-item",
   },
   {
     id: 2,
-    title: "Register",
+    title: "register",
     path: "./register",
     cName: "submenu-item",
   },
@@ -101,14 +102,14 @@ export const userLogoutDropdown = [
 export const userLoginDropdown = [
   {
     id: 1,
-    title: "Cart",
+    title: "cart",
     path: "./cart",
     cName: "submenu-item",
   },
 
   {
     id: 2,
-    title: "Profile",
+    title: "profile",
     path: "./profile",
     cName: "submenu-item",
   },

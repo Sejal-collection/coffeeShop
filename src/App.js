@@ -26,6 +26,7 @@ import Milkshakes from './Pages/milkshake';
 import PremiumBeans from './Pages/PremiumBeans';
 import ForgetPassword from "./Pages/ForgetPassword";
 import ExpertBaristas from "./Pages/ExpertBaristas";
+import CozyAmbiance from "./Pages/CozyAmbiance";
 import Reviews from "./componets/Reviews";
 import AnimatedCursor from "react-animated-cursor";
 import Feedback from './Pages/Feedback';
@@ -78,6 +79,7 @@ function App() {
               <Route path="/premiumbeans" element={<PremiumBeans />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/expertbaristas" element={<ExpertBaristas />} />
+              <Route path="/cozyambiance" element={<CozyAmbiance />} />
             </Routes>
           </ContentContainer>
           <Reviews />
