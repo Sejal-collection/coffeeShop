@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
@@ -91,6 +91,12 @@ const ArrowIcon = styled.div`
 `;
 
 function FAQ() {
+  const [openFAQ, setOpenFAQ] = useState(null); // State to track the currently open FAQ
+
+  const toggleFAQ = (index) => {
+    setOpenFAQ(openFAQ === index ? null : index); // Toggle the FAQ or close if clicked again
+  };
+
   return (
     
     <FAQContainer>
