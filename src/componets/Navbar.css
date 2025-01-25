@@ -164,3 +164,8 @@ body.menu-open {
   display: flex;
 }
 
+@media (max-width: 1175px) { /*to prevent overlapping of nav items and mobile menu icon*/
+  .right-nav {
+    display: none;
+  }
+}

@@ -28,6 +28,7 @@ const NavbarContainer = styled(motion.nav)`
   transition: all 0.3s ease;
   border-bottom: 2px solid #8b4513;
 
+
   &.scrolled {
     padding: 0.8rem 2rem;
     background: rgba(44, 19, 11, 0.98);
@@ -78,7 +79,7 @@ const Logo = styled(motion.div)`
 
 const RightNav = styled(motion.div)`
   display: flex;
-  justify-content: space-around;
+  justify-content: end; //now all the nav items are displayed
   align-items: center;
   padding: 1rem 2rem;
   position: fixed;
@@ -104,6 +105,7 @@ const RightNav = styled(motion.div)`
     opacity: 0.05;
     pointer-events: none;
   }
+
 `;
 
 const NavLinks = styled(motion.div)`
@@ -114,9 +116,18 @@ const NavLinks = styled(motion.div)`
   margin: 10px;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1175px) {
     display: none;
   }
+
+  @media (max-width: 1200px) {
+    gap: 1.5rem; /* Reduce spacing for medium screens */
+  }
+
+ 
+
+
+
 `;
 
 const NavLink = styled(motion.div)`
@@ -155,6 +166,10 @@ padding: 20px;
   &:hover::after {
     transform: translateX(-50%) scale(1);
   }
+
+ 
+  
+
 `;
 
 const MobileMenuButton = styled(motion.button)`
@@ -168,7 +183,7 @@ const MobileMenuButton = styled(motion.button)`
   border-radius: 8px;
   transition: all 0.3s ease;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1175px) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -309,6 +324,7 @@ function Navbar() {
           <Link to="/">MsCafe</Link>
         </Logo>
         <ul>
+          <div className=".right-nav">
           <RightNav>
             {navItems.map((items) => {
               if (items.title === "Product") {
@@ -446,6 +462,8 @@ function Navbar() {
               {isOpen ? "×" : "☰"}
             </MobileMenuButton>
           </RightNav>
+          </div>
+        
         </ul>
       </NavbarContainer>
 
