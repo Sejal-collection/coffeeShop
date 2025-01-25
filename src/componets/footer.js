@@ -145,9 +145,13 @@ transition: color 0.3s ease, transform 0.3s ease;
   color: #0077b5; /* LinkedIn Blue */
 }
 
-@media (max-width: 768px) {
-  font-size: 1.3rem;
-}
+  &[href*="github.com"]:hover {
+    color: #1C2025; /* GitHub Black */
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Divider = styled.hr`
@@ -187,7 +191,7 @@ function Footer() {
           </SocialIcon>
 
           <SocialIcon
-            href="https://x.com"
+            href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
