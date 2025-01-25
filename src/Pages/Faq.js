@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+
 const FAQContainer = styled.div`
   padding: 6rem 2rem 4rem 2rem;
   max-width: 1200px;
@@ -91,6 +92,7 @@ const ArrowIcon = styled.div`
 `;
 
 function FAQ() {
+  
   const [openFAQ, setOpenFAQ] = useState(null); // State to track the currently open FAQ
 
   const toggleFAQ = (index) => {
