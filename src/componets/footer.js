@@ -162,7 +162,21 @@ margin: 2rem auto;
 width: 80%; /* Adjust width for responsiveness */
 `;
 
+const PaymentIcons = styled.div`
+  display: flex;
+  align-items: center; 
+  gap: 1.5em; 
+  margin-top: 1rem;
 
+  @media(max-width: 768px) {
+  justify-content: center;
+  align-items: centre;
+  gap: 1rem;
+  i {
+  height: 0.5rem;
+    }
+  }
+`;
 
 function Footer() {
   return (
@@ -255,7 +269,7 @@ function Footer() {
             <p><a href="mailto:contact@mscafe.com">✉️ contact@mscafe.com</a></p>
             <p><a href="tel:+11234567890">☎️ (123) 456-7890</a></p>
             <h3>We Accept</h3>
-            <SocialIcons>
+            <PaymentIcons>
             <SocialIcon
             href="https://www.apple.com/apple-pay/"
             target="_blank"
@@ -300,7 +314,7 @@ function Footer() {
           >
             <i className="fa-brands fa-cc-visa"></i> {/* Visa icon */}
           </SocialIcon>
-          </SocialIcons>
+          </PaymentIcons>
           </InfoColumn>
           <InfoColumn>
             <h3>Location</h3>
