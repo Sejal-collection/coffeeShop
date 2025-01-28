@@ -14,6 +14,10 @@ import Register from './Pages/Register';
 import Shop from './Pages/Shop';
 import Cart from './Pages/cart';
 import About from './Pages/About';
+import Blog from './Pages/blog';
+import Blog1 from './Pages/blog1';
+import Blog2 from './Pages/blog2';
+import Blog3 from './Pages/blog3';
 import Faq from './Pages/Faq';
 import Contact from './Pages/contact';
 import Profile from './Pages/profile';
@@ -66,6 +70,10 @@ function App() {
               <Route path="/shop" element={<Shop />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog1" element={<Blog1 />} />
+              <Route path="/blog2" element={<Blog2 />} />
+              <Route path="/blog3" element={<Blog3 />} />
               <Route path="/testimonial" element={<Testimonial />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/profile" element={<Profile />} />
