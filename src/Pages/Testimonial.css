@@ -185,7 +185,6 @@ h1 {
 
   .single {
     max-width: 90%; /* Adjust card width */
-    height: auto;
   }
 
   .image {
@@ -216,7 +215,6 @@ h1 {
 
   .single {
     max-width: 95%; /* Adjust card width */
-    height: auto;
   }
 
   .image {
