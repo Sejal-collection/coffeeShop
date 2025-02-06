@@ -134,7 +134,7 @@ transition: color 0.3s ease, transform 0.3s ease;
 }
 
 &[href*="twitter.com"]:hover {
-  color: #1da1f2; /* Twitter Blue */
+  color: #000000; /* X Black */
 }
 
 &[href*="instagram.com"]:hover {
@@ -212,7 +212,7 @@ function Footer() {
             whileHover={{ scale: 1.2 }}
             aria-label="Twitter"
             role="link">
-            <i className="fab fa-twitter"></i>  {/* Twitter icon */}
+            <i className="fab fa-x-twitter"></i>  {/* Twitter icon */}
           </SocialIcon>
 
       
