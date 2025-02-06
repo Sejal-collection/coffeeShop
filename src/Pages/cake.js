@@ -269,6 +269,7 @@ function Cake() {
         Our Cake Selection
       </Title> */}
 
+
       <Title
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -287,6 +288,19 @@ function Cake() {
           Search
         </SearchButton>
       </SearchFilterContainer>
+
+      <Title initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        Our Cake Selection
+      </Title>
+      <SearchFilterContainer>
+
+      <SearchInput type="text" placeholder="Search for cake..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+      <SearchButton onClick={() => console.log("Search clicked!")}>
+        Search
+      </SearchButton>
+
+  </SearchFilterContainer>
+
 
       <ProductGrid>
         {products.map((product) => (

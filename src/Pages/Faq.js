@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Importing arrows from react-icons
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
 
 const FAQContainer = styled.div`
   padding: 6rem 2rem 4rem 2rem;
@@ -76,8 +76,8 @@ const Answer = styled(motion.p)`
   font-size: 1.1rem;
   color: #6b4423;
   line-height: 1.6;
-  font-family: "Poppins", sans-serif;
-  max-height: 0;
+  font-family: 'Poppins', sans-serif;
+  max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')};
   overflow: hidden;
   transition: max-height 0.4s ease-out;
 `;
@@ -92,16 +92,15 @@ const ArrowIcon = styled.div`
 `;
 
 function FAQ() {
-  const [isOpen, setIsOpen] = useState({}); // state to track which FAQ is open
+  
+  const [openFAQ, setOpenFAQ] = useState(null); // State to track the currently open FAQ
 
-  const toggleAnswer = (index) => {
-    setIsOpen((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+  const toggleFAQ = (index) => {
+    setOpenFAQ(openFAQ === index ? null : index); // Toggle the FAQ or close if clicked again
   };
 
   return (
+    
     <FAQContainer>
       <FAQHeading
         initial={{ opacity: 0, y: -50 }}
@@ -111,47 +110,75 @@ function FAQ() {
         Frequently Asked Questions (FAQs)
       </FAQHeading>
       <FAQContent>
-        {[1, 2, 3, 4].map((index) => (
-          <FAQItem
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+        <FAQItem
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          onClick={() => toggleFAQ(1)}
+        >
+          <Question
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            onClick={() => toggleAnswer(index)}
           >
-            <Question
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              {index === 1 && "How do I place an order?"}
-              {index === 2 && "Can I modify my order after placing it?"}
-              {index === 3 && "What payment methods do you accept?"}
-              {index === 4 && "How can I track my order?"}
-              <ArrowIcon isOpen={isOpen[index]}>
-                {isOpen[index] ? <FaChevronDown /> : <FaChevronUp />}
-              </ArrowIcon>
-            </Question>
-            <Answer
-              id={`answer${index}`}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              style={{
-                maxHeight: isOpen[index] ? "200px" : "0", // max-height for opening/closing
-              }}
-            >
-              {index === 1 &&
-                'To place an order, browse our collection and click the "Add to Cart" button. When you\'re ready, proceed to checkout.'}
-              {index === 2 &&
-                "Unfortunately, once an order is placed, it cannot be modified. However, you can cancel it and place a new one if needed."}
-              {index === 3 &&
-                "We accept various payment methods including credit cards, PayPal, and bank transfers."}
-              {index === 4 &&
-                "After your order is shipped, you will receive a tracking number via email to monitor your shipment."}
-            </Answer>
-          </FAQItem>
-        ))}
+            How do I place an order?
+          </Question>
+          <Answer isOpen={openFAQ === 1}> {/* Pass the isOpen prop */}
+          To place an order, browse our collection and click the 'Add to Cart' button. When you're ready, proceed to checkout.
+        </Answer>
+
+        </FAQItem>
+        <FAQItem
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          onClick={() => toggleFAQ(2)}
+        >
+          <Question
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 , delay: 0.4 }}
+          >
+            Can I modify my order after placing it?
+          </Question>
+          <Answer isOpen={openFAQ === 2}>
+            Unfortunately, once an order is placed, it cannot be modified. However, you can cancel it and place a new one if needed.
+          </Answer>
+        </FAQItem>
+        <FAQItem
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          onClick={() => toggleFAQ(3)}
+        >
+          <Question
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            What payment methods do you accept?
+          </Question>
+          <Answer isOpen={openFAQ === 3}>
+            We accept various payment methods including credit cards, PayPal, and bank transfers.
+          </Answer>
+        </FAQItem>
+        <FAQItem
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          onClick={() => toggleFAQ(4)}
+        >
+          <Question
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            How can I track my order?
+          </Question>
+          <Answer isOpen={openFAQ === 4}>
+            After your order is shipped, you will receive a tracking number via email to monitor your shipment.
+          </Answer>
+        </FAQItem>
       </FAQContent>
     </FAQContainer>
   );
