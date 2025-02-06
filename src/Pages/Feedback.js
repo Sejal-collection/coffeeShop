@@ -1,6 +1,7 @@
 // src/Pages/Feedback.js
 import React, { useState } from 'react';
 import './Feedback.css';
+import StarRating from './StarRating';
 
 function Feedback() {
   const [rating, setRating] = useState(0);
@@ -37,7 +38,7 @@ function Feedback() {
       <form className="feedback-form" onSubmit={handleSubmit}>
         <div className="form-field">
           <label className="label">Rating: </label>
-          <input type="number" value={rating} onChange={(e) => setRating(e.target.value)} max={5} min={1} />
+          <StarRating />
         </div>
         <div className="form-field">
           <label className="label">Comments: </label>
