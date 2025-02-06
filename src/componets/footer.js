@@ -260,6 +260,7 @@ function Footer() {
             <Link to="/">Home</Link>
             <Link to="/shop">Shop</Link>
             <Link to="/about">About</Link>
+            <Link to="/blog">Blog</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/testimonial">Testimonial</Link>
             <Link to="/contributor">Contributors</Link>
