@@ -346,7 +346,9 @@ function Home() {
             src="https://img.freepik.com/free-photo/modern-coffee-shop-with-comfortable-chairs-elegant-decor-relaxing-ambiance-generated-by-artificial-intelligence_188544-150832.jpg?t=st=1727760180~exp=1727763780~hmac=5b12fc3782c57d5c5a04bcd60e2d275f3c18e52b87d6939948612e1cd4a76d68&w=1380"
             alt="Cozy Ambiance"
           />
-          <FeatureTitle>Cozy Ambiance</FeatureTitle>
+          <Link to="/CozyAmbiance">
+            <FeatureTitle>Cozy Ambiance</FeatureTitle>
+          </Link>
           <FeatureDescription>
             Enjoy your coffee in our warm and inviting atmosphere.
           </FeatureDescription>
