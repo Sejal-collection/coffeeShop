@@ -39,3 +39,19 @@
     transform: rotate(360deg);
   }
 }
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('https://img.freepik.com/premium-photo/light-coffee-brown-background-with-smooth-brown-background-image-vintage-grunge-paper_1020697-718601.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
