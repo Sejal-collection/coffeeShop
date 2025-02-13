@@ -196,7 +196,7 @@ function Footer() {
           </SocialIcon>
 
           <SocialIcon
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/mohamed-mujtaba-290885249/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
@@ -218,7 +218,7 @@ function Footer() {
       
 
           <SocialIcon
-            href="https://instagram.com"
+            href="https://www.instagram.com/hy.mujtaba/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
