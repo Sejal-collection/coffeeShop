@@ -2,10 +2,10 @@ import React from "react";
 
 function SignupPage() {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-[#D2B48C] rounded-lg shadow-lg overflow-hidden w-[900px] h-[500px] flex">
+    <div className="flex items-center justify-center min-h-[90vh] md:h-screen bg-gray-100">
+      <div className="bg-[#D2B48C] rounded-lg shadow-lg overflow-hidden w-full max-w-[900px] h-auto md:h-[500px] flex flex-col md:flex-row mx-4 md:mx-0">
         {/* Left Side: Image */}
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2 h-64 md:h-auto">
           <img
             src="https://www.shutterstock.com/image-photo/assorted-iced-coffee-on-white-600nw-2480796893.jpg"
             alt="Coffee"
@@ -13,7 +13,7 @@ function SignupPage() {
           />
         </div>
         {/* Right Side: Signup Form */}
-        <div className="w-1/2 p-10 flex flex-col justify-center bg-white">
+        <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center bg-white">
           <h2 className="text-3xl font-bold text-[#4E342E] text-center mb-6">
             Create an Account
           </h2>
