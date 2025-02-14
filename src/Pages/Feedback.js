@@ -42,15 +42,15 @@ function Feedback() {
         </div>
         <div className="form-field">
           <label className="label">Comments: </label>
-          <textarea className="textarea" value={comments} onChange={(e) => setComments(e.target.value)} />
+          <textarea className="textarea" placeholder='Enter your comments.......' value={comments} onChange={(e) => setComments(e.target.value)} />
         </div>
         <div className="form-field">
           <label className="label">Name: </label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" placeholder='Enter your name' value={name} onChange={(e) => setName(e.target.value)} />
         </div>
         <div className="form-field">
           <label className="label">Email: </label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" placeholder='Enter your email' value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="form-field">
           <label className="label">Date of Visit: </label>
