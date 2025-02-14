@@ -46,16 +46,17 @@ flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
 .infoimg {
   height: auto;
   max-height: 10rem;
-  width: 100%;
+  width: 90%;
   max-width: 10rem; /* Restrict size for smaller devices */
   margin-bottom: 1rem;
+  margin-left:-130px;
 }
 
 .info-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  width: 100%; /* Ensure it adapts to smaller devices */
+ 
+  width: 90%; /* Ensure it adapts to smaller devices */
 }
 
 @media (max-width: 768px) {
