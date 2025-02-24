@@ -35,7 +35,9 @@ const Reviews = () => {
             </div>
 
             <div className="relative grid max-w-lg grid-cols-1 gap-6 mx-auto md:max-w-none lg:gap-10 md:grid-cols-3">
-              <div className="flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl">
+              {/* <div className="flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl"> */}
+              <div className="group flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-tl-3xl rounded-br-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none"></div>
                 <div className="flex flex-col justify-between flex-1 p-6 bg-white lg:py-8 lg:px-7">
                   <div className="flex-1">
                     <div className="flex items-center">
@@ -79,7 +81,8 @@ const Reviews = () => {
                 </div>
               </div>
 
-              <div className="flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl">
+              <div className="group flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-tl-3xl rounded-br-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none"></div>
                 <div className="flex flex-col justify-between flex-1 p-6 bg-white lg:py-8 lg:px-7">
                   <div className="flex-1">
                     <div className="flex items-center">
@@ -152,7 +155,10 @@ const Reviews = () => {
                 </div>
               </div>
 
-              <div className="flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl">
+              <div className="group flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-tl-3xl rounded-br-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none"></div>
+
+                
                 <div className="flex flex-col justify-between flex-1 p-6 bg-white lg:py-8 lg:px-7">
                   <div className="flex-1">
                     <div className="flex items-center">
@@ -224,7 +230,6 @@ const Reviews = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
