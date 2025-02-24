@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Button from '../componets/Button';
-
+import '../App.css';
 const ContactContainer = styled.div`
   padding: 4rem 2rem;
   max-width: 800px;
   margin: 0 auto;
   padding-top: 1.5rem; /* Adjusted padding for top */
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-`;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  `;
 
 const Title = styled(motion.h1)`
   font-size: 3rem;
   margin-bottom: 2rem;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
   color: #7c2214; 
 `;
 
@@ -88,6 +90,7 @@ function Contact() {
   };
 
   return (
+    <div className='page-container'>
     <ContactContainer>
       <Title
         className = "mt-7"
@@ -144,6 +147,7 @@ function Contact() {
         <Button primary type="submit">Send Message</Button>
       </Form>
     </ContactContainer>
+    </div>
   );
 }
 
