@@ -113,7 +113,6 @@ const ProceedButton = styled(motion.button)`
 function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
 
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));
