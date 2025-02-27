@@ -459,18 +459,7 @@ function Navbar() {
 
               {isLoggedIn && (
                 <>
-                  <NavLink
-                    className={location.pathname === "/profile" ? "active" : ""}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Link to="/profile">Profile</Link>
-                  </NavLink>
-                  <NavLink
-                    className={location.pathname === "/cart" ? "active" : ""}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Link to="/cart">Cart</Link>
-                  </NavLink>
+                  
                   <NavLink
                     whileHover={{ scale: 1.05 }}
                     onClick={() => {
@@ -559,9 +548,7 @@ function Navbar() {
             {isLoggedIn ? (
               <>
                 <MobileNavLink whileHover={{ scale: 1.02 }}>
-                  <Link to="/profile" onClick={toggleMenu}>
                     Profile
-                  </Link>
                 </MobileNavLink>
                 <MobileNavLink whileHover={{ scale: 1.02 }}>
                   <Link to="/cart" onClick={toggleMenu}>
