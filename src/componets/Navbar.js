@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../Store/authSlice";
 import styled from "styled-components";
@@ -285,12 +285,13 @@ const ShopLink = styled(NavLink)`
 
 function Navbar() {
   const [prodropdown, setproDropdown] = useState(false);
+  const navigate=useNavigate();
   const [osdropdown, setosDropdown] = useState(false);
   const [uslogindropdown, setusloginDropdown] = useState(false);
   const [uslogoutdropdown, setuslogoutDropdown] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -324,8 +325,14 @@ function Navbar() {
   }, [isOpen]);
 
   const handleLogout = () => {
-    dispatch(logout());
+    localStorage.removeItem("isAuthenticated"); // Remove authentication flag
+    localStorage.removeItem("userToken"); // Remove token if stored
+    navigate("/")
+    dispatch(logout()); // Dispatch logout action if using Redux
+  
+    window.location.reload(); // Reload to reset state/UI
   };
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -386,20 +393,24 @@ function Navbar() {
                   <NavLinks key={items.id}>
                     <li
                       className={location.pathname === items.path ? "active" : ""}
-                      onMouseEnter={() => setuslogoutDropdown(true)}
-                      onMouseLeave={() => setuslogoutDropdown(false)}
+                      onMouseEnter={() => isLoggedIn ? setusloginDropdown(true) : setuslogoutDropdown(true)}
+                      onMouseLeave={() => isLoggedIn ? setusloginDropdown(false) : setuslogoutDropdown(false)}
                     >
                       <NavLink whileHover={{ scale: 1.05 }}>
-                        <Link to="/cart">{items.title}</Link>
-                        {isLoggedIn ? 
-                          (uslogindropdown && <UsLoginDropdown />) :
-                          (uslogoutdropdown && <UsLogoutDropdown />)
-                        }
+                        <Link to={isLoggedIn ? "/profile" : "/login"}>
+                          {isLoggedIn ? "Profile" : items.title}
+                        </Link>
+                        {isLoggedIn ? (
+                          uslogindropdown && <UsLoginDropdown />
+                        ) : (
+                          uslogoutdropdown && <UsLogoutDropdown />
+                        )}
                       </NavLink>
                     </li>
                   </NavLinks>
                 );
               }
+              
               
               if(items.title === "Feedback"){
                 return(
@@ -448,18 +459,7 @@ function Navbar() {
 
               {isLoggedIn && (
                 <>
-                  <NavLink
-                    className={location.pathname === "/profile" ? "active" : ""}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Link to="/profile">Profile</Link>
-                  </NavLink>
-                  <NavLink
-                    className={location.pathname === "/cart" ? "active" : ""}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Link to="/cart">Cart</Link>
-                  </NavLink>
+                  
                   <NavLink
                     whileHover={{ scale: 1.05 }}
                     onClick={() => {
@@ -468,8 +468,8 @@ function Navbar() {
                     }}
                     style={{ cursor: "pointer" }}
                   >
-                    <span style={{ color: "#deb887" }}>Logout</span>
-                  </NavLink>
+      <span style={{ color: "#deb887", fontWeight: "bold",fontSize: "1.1rem" }}>Logout</span>
+      </NavLink>
                 </>
               )}
             </NavLinks>
@@ -548,9 +548,7 @@ function Navbar() {
             {isLoggedIn ? (
               <>
                 <MobileNavLink whileHover={{ scale: 1.02 }}>
-                  <Link to="/profile" onClick={toggleMenu}>
                     Profile
-                  </Link>
                 </MobileNavLink>
                 <MobileNavLink whileHover={{ scale: 1.02 }}>
                   <Link to="/cart" onClick={toggleMenu}>

@@ -5,12 +5,16 @@ function LoginPage() {
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
   const navigate = useNavigate(); 
+
   const handleSubmit = (e) => { 
     e.preventDefault();
     if (!email || !password) {
       alert("Please fill in all fields.");
       return;
     }
+
+    // Simulating successful login
+    localStorage.setItem("isAuthenticated", "true"); // Store login status
     navigate("/home");
   };
 
@@ -32,10 +36,7 @@ function LoginPage() {
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label
-                className="block text-gray-700 font-medium mb-2"
-                htmlFor="email"
-              >
+              <label className="block text-gray-700 font-medium mb-2" htmlFor="email">
                 Email Address
               </label>
               <input
@@ -48,10 +49,7 @@ function LoginPage() {
               />
             </div>
             <div className="mb-4">
-              <label
-                className="block text-gray-700 font-medium mb-2"
-                htmlFor="password"
-              >
+              <label className="block text-gray-700 font-medium mb-2" htmlFor="password">
                 Password
               </label>
               <input
@@ -72,10 +70,7 @@ function LoginPage() {
           </form>
           <p className="text-sm text-gray-600 text-center mt-6">
             Don’t have an account?{" "}
-            <a
-              href="/register"
-              className="text-[#6D4C41] font-medium hover:underline"
-            >
+            <a href="/register" className="text-[#6D4C41] font-medium hover:underline">
               Sign Up
             </a>
           </p>
