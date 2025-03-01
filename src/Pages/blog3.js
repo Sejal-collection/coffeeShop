@@ -1,57 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Blog1() {
+function Blog3() {
     return (
-        <div className="min-h-screen bg-white w-[80%] ml-[10%] text-gray-800">
-            <div className="container p-8 bg-white rounded-lg shadow-lg mx-auto mt-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-center text-brown-700">
-                    The Perfect Bean
+        <div className="min-h-screen bg-gray-50 text-gray-800">
+            <article className="max-w-4xl mx-auto px-4 py-12">
+                {/* Header Section */}
+                <header className="mb-12">
+                    <h1 className="text-5xl font-extrabold text-center text-brown-700">
+                        The Perfect Bean
                     </h1>
-                    <p className="text-center text-gray-600 mt-2">
+                    <p className="mt-4 text-center text-lg text-gray-600">
                         Discover the secrets behind the perfect coffee bean and the art of brewing the perfect cup.
                     </p>
-                </div>
+                </header>
 
                 {/* Featured Image */}
-                <div className="w-full max-w-4xl mx-auto mb-8">
+                <div className="mb-12">
                     <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcuIiY7YeF57cYcrlzNynVRZACaoSxR8ujJw&s"
-                        alt="Art of Brewing"
-                        className="w-1/2 h-[80%] ml-56 rounded-lg shadow-lg"
+                        src="https://images6.alphacoders.com/715/715419.jpg"
+                        alt="The Perfect Bean"
+                        className="w-full h-auto rounded-lg shadow-xl"
                     />
                 </div>
 
-                 {/* Blog Content */}
-                 <div className="w-full max-w-3xl mx-auto bg-slate-50 p-6 rounded-lg shadow-md">
-                    <p className="text-lg text-gray-700 mb-4">
+                {/* Blog Content */}
+                <section className="prose prose-lg prose-indigo mx-auto">
+                    <p>
                         At MsCafe, every cup of coffee starts with the perfect bean. We believe that quality begins at the source, which is why we work closely with farmers around the world to ensure only the finest beans make it into your cup.
                     </p>
-                    <p className="text-lg text-gray-700 mb-4">
+                    <p>
                         Our beans are grown in the most ideal climates, handpicked at peak ripeness, and carefully processed to retain their natural flavor and aroma. We prioritize sustainable farming methods to protect the environment and support local communities.
                     </p>
-                    <p className="text-lg text-gray-700 mb-4">
+                    <p>
                         Once the beans reach our roastery, they undergo a meticulous roasting process. Each batch is roasted to perfection, unlocking its unique profile and bringing out notes of chocolate, caramel, citrus, or floral undertones, depending on the bean's origin.
                     </p>
-                    <p className="text-lg text-gray-700">
+                    <p>
                         Finally, the brewing process brings it all together. Whether you prefer a classic espresso, a smooth pour-over, or a rich French press, the journey of the perfect bean culminates in a cup that delights the senses and invigorates the soul.
                     </p>
-                </div>
-
+                </section>
 
                 {/* Back Button */}
-                <div className="mt-8 text-center">
+                <footer className="mt-12 text-center">
                     <Link to="/blog">
-                        <button className="px-6 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 shadow-lg">
+                        <button className="px-8 py-3 bg-amber-600 text-white font-semibold rounded-full shadow hover:bg-amber-700 transition duration-300">
                             Back to Blog
                         </button>
                     </Link>
-                </div>
-            </div>
+                </footer>
+            </article>
         </div>
     );
 }
 
-export default Blog1;
+export default Blog3;
