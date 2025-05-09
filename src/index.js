@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
@@ -12,22 +12,33 @@ root.render(
 );
 
 // Get the button element
-const scrollToTopButton = document.getElementById("scrollToTop");
+// Get reference to the scroll-to-top button
+const scrollToTopButton = document.getElementById("scrollToTopButton");
 
-// Show the button when the user scrolls down 100px
-window.onscroll = function () {
-  if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-    scrollToTopButton.style.display = "block";
-  } else {
-    scrollToTopButton.style.display = "none";
+// Function to handle scroll visibility toggle
+function toggleScrollToTopButton() {
+  const scrollPosition =
+    document.documentElement.scrollTop || document.body.scrollTop;
+
+  // Show or hide the button based on scroll position
+  scrollToTopButton.style.display = scrollPosition > 100 ? "block" : "none";
+}
+
+// Scroll event with performance optimization using requestAnimationFrame
+window.addEventListener("scroll", () => {
+  if (
+    document.documentElement.scrollTop !== undefined ||
+    document.body.scrollTop !== undefined
+  ) {
+    requestAnimationFrame(toggleScrollToTopButton);
   }
-};
+});
 
-// Scroll to the top when the button is clicked
-scrollToTopButton.addEventListener("click", function () {
+// Scroll to the top with smooth behavior when the button is clicked
+scrollToTopButton.addEventListener("click", () => {
   window.scrollTo({
     top: 0,
-    behavior: "smooth", // Smooth scrolling
+    behavior: "smooth",
   });
 });
 
