@@ -28,7 +28,6 @@ const NavbarContainer = styled(motion.nav)`
   transition: all 0.3s ease;
   border-bottom: 2px solid #8b4513;
 
-
   &.scrolled {
     padding: 0.8rem 2rem;
     background: rgba(44, 19, 11, 0.98);
@@ -71,20 +70,20 @@ const Logo = styled(motion.div)`
   }
 
   img {
-    margin-right: 5px; /* Adds space between the image and the text */
-    width: 30px; /* Adjust size of the image */
-    height: 30px; /* Adjust size of the image */
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
 const RightNav = styled(motion.div)`
   display: flex;
-  justify-content: end; //now all the nav items are displayed
+  justify-content: end;
   align-items: center;
   padding: 1rem 2rem;
   position: fixed;
   top: 0px;
-  left: 35vw; //Now the Shop section is completely visible at the top-right section of Navbar.
+  left: 35vw;
   right: 0;
   z-index: 1000;
   transition: all 0.3s ease;
@@ -105,7 +104,6 @@ const RightNav = styled(motion.div)`
     opacity: 0.05;
     pointer-events: none;
   }
-
 `;
 
 const NavLinks = styled(motion.div)`
@@ -121,13 +119,8 @@ const NavLinks = styled(motion.div)`
   }
 
   @media (max-width: 1200px) {
-    gap: 1.5rem; /* Reduce spacing for medium screens */
+    gap: 1.5rem;
   }
-
- 
-
-
-
 `;
 
 const NavLink = styled(motion.div)`
@@ -140,7 +133,7 @@ const NavLink = styled(motion.div)`
     font-size: 1.1rem;
     transition: all 0.3s ease;
     font-family: "Poppins", sans-serif;
-padding: 20px;
+    padding: 20px;
 
     &:hover {
       color: #ffe4b5;
@@ -166,10 +159,6 @@ padding: 20px;
   &:hover::after {
     transform: translateX(-50%) scale(1);
   }
-
- 
-  
-
 `;
 
 const MobileMenuButton = styled(motion.button)`
@@ -285,13 +274,16 @@ const ShopLink = styled(NavLink)`
 
 function Navbar() {
   const [prodropdown, setproDropdown] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [osdropdown, setosDropdown] = useState(false);
   const [uslogindropdown, setusloginDropdown] = useState(false);
   const [uslogoutdropdown, setuslogoutDropdown] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const isLoggedIn = localStorage.getItem("isAuthenticated") === "true";
+  
+  // FIXED: Use Redux state instead of localStorage
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -324,15 +316,11 @@ function Navbar() {
     };
   }, [isOpen]);
 
+  // FIXED: Simplified logout function to only use Redux
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated"); // Remove authentication flag
-    localStorage.removeItem("userToken"); // Remove token if stored
-    navigate("/")
-    dispatch(logout()); // Dispatch logout action if using Redux
-  
-    window.location.reload(); // Reload to reset state/UI
+    dispatch(logout()); // This updates Redux state
+    navigate("/");
   };
-  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -411,7 +399,6 @@ function Navbar() {
                 );
               }
               
-              
               if(items.title === "Feedback"){
                 return(
                   <NavLinks key={items.id}>
@@ -439,8 +426,6 @@ function Navbar() {
 
             {/* Shop and other navigation items */}
             <NavLinks>
-            
-
               <ShopLink className={location.pathname === "/shop" ? "active" : ""}>
                 <Link to="/shop">Shop</Link>
                 <DropdownMenu>
@@ -450,6 +435,7 @@ function Navbar() {
                   <Link to="/shop/milkshake">Milkshakes</Link>
                 </DropdownMenu>
               </ShopLink>
+              
               <NavLink
                 className={location.pathname === "/faq" ? "active" : ""}
                 whileHover={{ scale: 1.05 }}
@@ -459,7 +445,6 @@ function Navbar() {
 
               {isLoggedIn && (
                 <>
-                  
                   <NavLink
                     whileHover={{ scale: 1.05 }}
                     onClick={() => {
@@ -468,8 +453,10 @@ function Navbar() {
                     }}
                     style={{ cursor: "pointer" }}
                   >
-      <span style={{ color: "#deb887", fontWeight: "bold",fontSize: "1.1rem" }}>Logout</span>
-      </NavLink>
+                    <span style={{ color: "#deb887", fontWeight: "bold", fontSize: "1.1rem" }}>
+                      Logout
+                    </span>
+                  </NavLink>
                 </>
               )}
             </NavLinks>
@@ -483,7 +470,6 @@ function Navbar() {
             </MobileMenuButton>
           </RightNav>
           </div>
-        
         </ul>
       </NavbarContainer>
 
@@ -548,7 +534,9 @@ function Navbar() {
             {isLoggedIn ? (
               <>
                 <MobileNavLink whileHover={{ scale: 1.02 }}>
+                  <Link to="/profile" onClick={toggleMenu}>
                     Profile
+                  </Link>
                 </MobileNavLink>
                 <MobileNavLink whileHover={{ scale: 1.02 }}>
                   <Link to="/cart" onClick={toggleMenu}>
