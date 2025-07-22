@@ -13,12 +13,11 @@ const Reviews = () => {
               Our happy clients say about us
             </h2>
           </div>
-
-          <div className="mt-8 text-center md:mt-16 md:order-3">
+          <div className="text-center mt-8 md:mt-16 md:order-3">
             <a
               href="/testimonial"
-              title=""
-              className="pb-2 text-base font-bold leading-7 text-gray-900 transition-all duration-200 border-b-2 border-gray-900 hover:border-gray-600 font-pj focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2 hover:text-gray-600"
+              title="Check all reviews"
+              className="text-base font-bold leading-7 text-gray-900 border-b-2 border-gray-900 transition-all duration-200 font-pj hover:text-gray-600 hover:border-gray-600 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2 pb-2"
             >
               Check all 2,157 reviews
             </a>
@@ -158,7 +157,6 @@ const Reviews = () => {
               <div className="group flex border-2 border-black rounded-tl-3xl rounded-br-3xl flex-col overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-tl-3xl rounded-br-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none"></div>
 
-                
                 <div className="flex flex-col justify-between flex-1 p-6 bg-white lg:py-8 lg:px-7">
                   <div className="flex-1">
                     <div className="flex items-center">
