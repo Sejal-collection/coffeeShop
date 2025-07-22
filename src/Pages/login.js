@@ -1,10 +1,13 @@
 import React, { useState } from "react"; 
 import { useNavigate } from "react-router-dom"; 
+import { useDispatch } from "react-redux";
+import { login } from "../Store/authSlice";
 
 function LoginPage() {
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
   const navigate = useNavigate(); 
+  const dispatch = useDispatch(); // Add Redux dispatch
 
   const handleSubmit = (e) => { 
     e.preventDefault();
@@ -13,9 +16,9 @@ function LoginPage() {
       return;
     }
 
-    // Simulating successful login
-    localStorage.setItem("isAuthenticated", "true"); // Store login status
-    navigate("/home");
+    // FIXED: Used Redux instead of localStorage and now we can logout and login accordingly :)))
+    dispatch(login()); // This updates Redux state
+    navigate("/home"); // Navigate after successful login
   };
 
   return (
@@ -69,7 +72,7 @@ function LoginPage() {
             </button>
           </form>
           <p className="text-sm text-gray-600 text-center mt-6">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <a href="/register" className="text-[#6D4C41] font-medium hover:underline">
               Sign Up
             </a>
