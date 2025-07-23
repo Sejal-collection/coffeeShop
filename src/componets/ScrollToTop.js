@@ -59,4 +59,5 @@ const { pathname } = useLocation();
   );
 };
 
+
 export default ScrollToTop;

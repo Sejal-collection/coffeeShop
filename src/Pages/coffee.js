@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../Store/cartSlice';
 import styled from 'styled-components';
@@ -6,19 +7,20 @@ import { motion } from 'framer-motion';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const CoffeeContainer = styled.div`
-  padding: 6rem 2rem 4rem 2rem; // Added top padding for navbar
+  padding: 6rem 2rem 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #fffbeb; // Warm background color
+  background-color: #fffbeb;
 `;
 
 const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  max-width: 1100px; // Slightly reduced to center content more
+  max-width: 1100px;
   margin: 0 auto;
 `;
+
 const ProductCard = styled(motion.div)`
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
   border-radius: 10px;
@@ -62,12 +64,14 @@ const ProductPrice = styled.p`
   margin-bottom: 1rem;
   font-weight: 600;
 `;
+
 const Title = styled(motion.h1)`
   font-size: 2.5rem;
   margin-bottom: 2rem;
   text-align: center;
-  color: #78350f; // Warm brown color
+  color: #78350f;
 `;
+
 const Button = styled.button`
   background: #78350f;
   color: white;
@@ -140,11 +144,54 @@ function Coffee() {
   const [searchQuery, setSearchQuery] = useState('');
   const [likedProducts, setLikedProducts] = useState({});
 
-  const toggleHeart = (productId) => {
-    setLikedProducts((prevState) => ({
-      ...prevState,
-      [productId]: !prevState[productId],
-    }));
+  // Load favorites from localStorage when component mounts
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const likedState = {};
+    favorites.forEach(fav => {
+      likedState[fav.id] = true;
+    });
+    setLikedProducts(likedState);
+  }, []);
+
+  // DEBUG VERSION - FIXED TOGGLE HEART FUNCTION
+  const toggleHeart = (product) => {
+    console.log('🫀 Heart clicked for:', product.name, 'ID:', product.id);
+    
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    console.log('📋 Current favorites:', favorites);
+    
+    const isCurrentlyLiked = likedProducts[product.id];
+    console.log('❤️ Is currently liked:', isCurrentlyLiked);
+
+    if (isCurrentlyLiked) {
+      // Remove from favorites
+      const updatedFavorites = favorites.filter(fav => fav.id !== product.id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      console.log('🗑️ Removed from favorites. New list:', updatedFavorites);
+      setLikedProducts(prev => ({
+        ...prev,
+        [product.id]: false
+      }));
+    } else {
+      // Add to favorites
+      const favoriteItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image
+      };
+      const updatedFavorites = [...favorites, favoriteItem];
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      console.log('➕ Added to favorites. New list:', updatedFavorites);
+      setLikedProducts(prev => ({
+        ...prev,
+        [product.id]: true
+      }));
+    }
+
+    // Trigger update event for navbar counter
+    window.dispatchEvent(new CustomEvent('favoritesUpdated'));
   };
 
   const handleAddToCart = (product) => {
@@ -331,7 +378,7 @@ function Coffee() {
     name: "Café au lait",
     price: 3.8,
     image:
-      "https://blackturtlecoffee.com/cdn/shop/articles/Cafe-Au-Lait-004.jpg?v=1672848240",
+      "https://blackturtlecoffee.com/cdn/Shop/articles/Cafe-Au-Lait-004.jpg?v=1672848240",
     description:
       "Coffee with hot milk, similar to a latte but with a stronger coffee flavor.",
   },
@@ -345,7 +392,7 @@ function Coffee() {
       "Espresso served with sweetened condensed milk, creating a layered effect.",
   },
   {
-    id: 25,
+    id: 19, // FIXED: Changed from 25 to 19 to avoid duplicate key
     name: "Irish Coffee",
     price: 7.2,
     image:
@@ -371,7 +418,7 @@ function Coffee() {
               <ProductImage src={product.image} alt={product.name} />
 
               <div
-                onClick={() => toggleHeart(product.id)}
+                onClick={() => toggleHeart(product)}
                 style={{
                   position: 'absolute',
                   top: '10px',
