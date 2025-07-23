@@ -17,8 +17,9 @@ const ScrollButton = styled.button`
   z-index: 1000;
 `;
 
-const ScrollToTop = () => {
-  const location = useLocation();
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
   // Scroll to top instantly on route change
   useEffect(() => {
@@ -59,5 +60,6 @@ const ScrollToTop = () => {
     </ScrollButton>
   );
 };
+
 
 export default ScrollToTop;
