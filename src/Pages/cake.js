@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../Store/cartSlice";
 import styled from "styled-components";
@@ -6,10 +6,7 @@ import { motion } from "framer-motion";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const CakeContainer = styled.div`
-  padding: 6rem 2rem 4rem 2rem; // Added top padding for navbar
-
   padding: 6rem 2rem 4rem 2rem;
-
   max-width: 1200px;
   margin: 0 auto;
   background-color: #fffbeb;
@@ -123,12 +120,13 @@ const QuantityDisplay = styled.span`
   min-width: 20px;
   text-align: center;
 `;
+
 const SearchFilterContainer = styled.div`
   display: flex;
   justify-content: center;
-
   margin-bottom: 2rem;
 `;
+
 const SearchInput = styled.input`
   padding: 0.5rem;
   font-size: 1rem;
@@ -163,11 +161,49 @@ function Cake() {
   const [searchQuery, setSearchQuery] = useState("");
   const [likedProducts, setLikedProducts] = useState({});
 
-  const toggleHeart = (productId) => {
-    setLikedProducts((prevState) => ({
-      ...prevState,
-      [productId]: !prevState[productId],
-    }));
+  // Load favorites from localStorage when component mounts
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const likedState = {};
+    favorites.forEach(fav => {
+      likedState[fav.id] = true;
+    });
+    setLikedProducts(likedState);
+  }, []);
+
+  // Fixed toggle heart function that saves to localStorage
+  const toggleHeart = (product) => {
+    console.log('🧁 Cake heart clicked for:', product.name);
+    
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const isCurrentlyLiked = likedProducts[product.id];
+
+    if (isCurrentlyLiked) {
+      // Remove from favorites
+      const updatedFavorites = favorites.filter(fav => fav.id !== product.id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      setLikedProducts(prev => ({
+        ...prev,
+        [product.id]: false
+      }));
+    } else {
+      // Add to favorites
+      const favoriteItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image
+      };
+      const updatedFavorites = [...favorites, favoriteItem];
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      setLikedProducts(prev => ({
+        ...prev,
+        [product.id]: true
+      }));
+    }
+
+    // Trigger update event for navbar counter
+    window.dispatchEvent(new CustomEvent('favoritesUpdated'));
   };
 
   const handleAddToCart = (product) => {
@@ -207,71 +243,51 @@ function Cake() {
 
   const products = [
     {
-      id: 36,
+      id: 101,
       name: "Oreo cheese cake",
       price: 9.2,
-      image:
-        "https://handletheheat.com/wp-content/uploads/2015/11/oreo-cheesecake-recipe-SQUARE.jpg",
-      description:
-        "Creamy cheesecake with an Oreo crust and topping, rich and indulgent.",
+      image: "https://handletheheat.com/wp-content/uploads/2015/11/oreo-cheesecake-recipe-SQUARE.jpg",
+      description: "Creamy cheesecake with an Oreo crust and topping, rich and indulgent.",
     },
     {
-      id: 37,
+      id: 102,
       name: "Chocolate cake",
       price: 7.2,
       image: "https://img.freepik.com/free-photo/chocolate-cake_1203-8942.jpg",
-      description:
-        "Moist and decadent, a classic chocolate cake perfect for any celebration.",
+      description: "Moist and decadent, a classic chocolate cake perfect for any celebration.",
     },
     {
-      id: 38,
+      id: 103,
       name: "Red velvet cake",
       price: 4.2,
-      image:
-        "https://img.freepik.com/free-photo/top-view-red-strawberry-cake-delicious-with-tea-table-fruit-color-cake-biscuit-sweet_140725-28319.jpg",
-      description:
-        "Rich and velvety, a moist red cake with cream cheese frosting, elegant and delicious.",
+      image: "https://img.freepik.com/free-photo/top-view-red-strawberry-cake-delicious-with-tea-table-fruit-color-cake-biscuit-sweet_140725-28319.jpg",
+      description: "Rich and velvety, a moist red cake with cream cheese frosting, elegant and delicious.",
     },
     {
-      id: 39,
+      id: 104,
       name: "Cheese cake",
       price: 8.2,
-      image:
-        "https://img.freepik.com/premium-photo/citrus-cheesecake-cake-with-kumquats_82780-1574.jpg",
-      description:
-        "Creamy and smooth, a classic cheesecake with a graham cracker crust, perfect for dessert.",
+      image: "https://img.freepik.com/premium-photo/citrus-cheesecake-cake-with-kumquats_82780-1574.jpg",
+      description: "Creamy and smooth, a classic cheesecake with a graham cracker crust, perfect for dessert.",
     },
     {
-      id: 40,
+      id: 105,
       name: "Blueberry cake",
       price: 3.2,
-      image:
-        "https://img.freepik.com/premium-photo/pieces-pie-from-cottage-cheese-blueberries_116441-1516.jpg",
-      description:
-        "Moist and bursting with blueberries, a sweet and tangy cake perfect for any occasion.",
+      image: "https://img.freepik.com/premium-photo/pieces-pie-from-cottage-cheese-blueberries_116441-1516.jpg",
+      description: "Moist and bursting with blueberries, a sweet and tangy cake perfect for any occasion.",
     },
     {
-      id: 41,
+      id: 106,
       name: "Strawberry cake",
       price: 6.0,
-      image:
-        "https://img.freepik.com/free-photo/delicious-cake-with-strawberries_23-2150797874.jpg",
-      description:
-        "Light and fluffy, a sweet strawberry cake with creamy frosting, perfect for summer.",
+      image: "https://img.freepik.com/free-photo/delicious-cake-with-strawberries_23-2150797874.jpg",
+      description: "Light and fluffy, a sweet strawberry cake with creamy frosting, perfect for summer.",
     },
   ];
 
   return (
     <CakeContainer>
-      {/* <Title
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Our Cake Selection
-      </Title> */}
-
-
       <Title
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -296,7 +312,7 @@ function Cake() {
             <div style={{ position: "relative" }}>
               <ProductImage src={product.image} alt={product.name} />
               <div
-                onClick={() => toggleHeart(product.id)}
+                onClick={() => toggleHeart(product)}
                 style={{
                   position: "absolute",
                   top: "10px",
