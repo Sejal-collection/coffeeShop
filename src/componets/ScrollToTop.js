@@ -26,7 +26,7 @@ const ScrollToTop = () => {
       top: 0,
       behavior: "instant", // or 'auto'
     });
-  }, [location]);
+  }, [pathname]);
 
   // Button visibility state
   const [visible, setVisible] = useState(false);
