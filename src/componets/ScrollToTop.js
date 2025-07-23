@@ -17,8 +17,9 @@ const ScrollButton = styled.button`
   z-index: 1000;
 `;
 
-const ScrollToTop = () => {
-  const location = useLocation();
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
   // Scroll to top instantly on route change
   useEffect(() => {
@@ -26,7 +27,7 @@ const ScrollToTop = () => {
       top: 0,
       behavior: "instant", // or 'auto'
     });
-  }, [location]);
+  }, [pathname]);
 
   // Button visibility state
   const [visible, setVisible] = useState(false);

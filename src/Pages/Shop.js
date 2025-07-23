@@ -367,7 +367,7 @@ const products = [
   },
 
   {
-    id: 25,
+    id: 19,
     name: "Irish Coffee",
     price: 7.2,
     image:

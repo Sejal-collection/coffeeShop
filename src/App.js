@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ScrollToTop from './componets/ScrollToTop'; 
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import ScrollToTop from './componets/ScrollToTop';
 import { Provider } from 'react-redux';
 import { store } from './Store/index';
 import styled from 'styled-components';
+
 import Navbar from './componets/Navbar';
 import Footer from './componets/footer';
+
 import Home from './Pages/Home';
 import Login from './Pages/login';
 import Register from './Pages/Register';
@@ -28,12 +30,15 @@ import Coffee from './Pages/coffee';
 import Soup from './Pages/soup';
 import Milkshakes from './Pages/milkshake';
 import PremiumBeans from './Pages/PremiumBeans';
-import ForgetPassword from "./Pages/ForgetPassword";
-import ExpertBaristas from "./Pages/ExpertBaristas";
-import CozyAmbiance from "./Pages/CozyAmbiance";
-import Reviews from "./componets/Reviews";
-import AnimatedCursor from "react-animated-cursor";
+import ForgetPassword from './Pages/ForgetPassword';
+import ExpertBaristas from './Pages/ExpertBaristas';
+import CozyAmbiance from './Pages/CozyAmbiance';
 import Feedback from './Pages/Feedback';
+import Favorites from './Pages/favorites';
+import Reviews from './componets/Reviews';
+import AnimatedCursor from 'react-animated-cursor';
+
+// Styled Containers
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,6 +50,14 @@ const ContentContainer = styled.div`
   flex: 1;
 `;
 
+// ✅ Protected Profile Route
+const SafeProfileRoute = () => {
+  const userData = localStorage.getItem('user');
+  const user = userData ? JSON.parse(userData) : null;
+
+  return user ? <Profile /> : <Navigate to="/login" replace />;
+};
+
 function App() {
   return (
     <Provider store={store}>
@@ -52,15 +65,18 @@ function App() {
         <ScrollToTop />
         <AppContainer>
           <Navbar />
-          <AnimatedCursor 
+
+          <AnimatedCursor
             innerSize={20}
             outerSize={20}
-            color='104, 225, 239'
+            color="104, 225, 239"
             outerAlpha={0.2}
             innerScale={0.7}
             outerScale={5}
           />
+
           <ToastContainer position="top-right" autoClose={3000} />
+
           <ContentContainer>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -77,7 +93,7 @@ function App() {
               <Route path="/blog3" element={<Blog3 />} />
               <Route path="/testimonial" element={<Testimonial />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<SafeProfileRoute />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/shop/cake" element={<Cake />} />
@@ -88,8 +104,10 @@ function App() {
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/expertbaristas" element={<ExpertBaristas />} />
               <Route path="/cozyambiance" element={<CozyAmbiance />} />
+              <Route path="/favorites" element={<Favorites />} />
             </Routes>
           </ContentContainer>
+
           <Reviews />
           <Footer />
         </AppContainer>

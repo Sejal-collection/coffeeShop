@@ -1,4 +1,3 @@
-
 export const navItems = [
   {
     id: 1,
@@ -36,36 +35,32 @@ export const navItems = [
     path: "./feedback",
     cName: "nav-item",
   },
- 
 ];
 
-export const productDropdown =[
-    {
-        id:1,
-        title:"Shop",
-        path:"./shop",
-        cName:"submenu-item",
-    },
-
-    {
-        id:2,
-        title:"Premium Beans",
-        path:"./premiumBeans",
-        cName:"submenu-item",
-    },
-
-    {
-        id:3,
-        title:"Expert Baristas",
-        path:"./expertbaristas",
-        cName:"submenu-item",
-    },
-
-    {
-      id:4,
-      title:"Cozy Ambiance",
-      path:"./cozyambiance",
-      cName:"submenu-item",
+export const productDropdown = [
+  {
+    id: 1,
+    title: "Shop",
+    path: "./shop",
+    cName: "submenu-item",
+  },
+  {
+    id: 2,
+    title: "Premium Beans",
+    path: "./premiumBeans",
+    cName: "submenu-item",
+  },
+  {
+    id: 3,
+    title: "Expert Baristas",
+    path: "./expertbaristas",
+    cName: "submenu-item",
+  },
+  {
+    id: 4,
+    title: "Cozy Ambiance",
+    path: "./cozyambiance",
+    cName: "submenu-item",
   },
 ];
 
@@ -106,13 +101,17 @@ export const userLoginDropdown = [
     path: "./cart",
     cName: "submenu-item",
   },
-
   {
     id: 2,
     title: "profile",
     path: "./profile",
     cName: "submenu-item",
   },
-
+  // ADDED FAVORITES OPTION HERE
+  {
+    id: 3,
+    title: "❤️ favorites",
+    path: "./favorites",
+    cName: "submenu-item",
+  },
 ];
-
