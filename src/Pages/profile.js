@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import Button from '../componets/Button'; // Corrected import statement
+import Button from '../componets/Button';
+import { Navigate } from 'react-router-dom';
 
 const ProfileContainer = styled.div`
   padding: 4rem 2rem;
@@ -46,10 +47,18 @@ const Order = styled.div`
 `;
 
 function Profile() {
-  const UserData = JSON.parse(localStorage.getItem('user'));
-  const user = useSelector((state) => state.auth.user);
+  const userDataRaw = localStorage.getItem('user');
+  const UserData = userDataRaw ? JSON.parse(userDataRaw) : null;
 
-  // Mock order history data
+  // Optional: If using Redux auth
+  const reduxUser = useSelector((state) => state.auth?.user || null);
+
+  // ✅ Redirect to login if not logged in
+  if (!UserData) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // ✅ Mock order history
   const orderHistory = [
     { id: 1, date: '2023-05-01', total: 15.99 },
     { id: 2, date: '2023-05-15', total: 24.99 },
@@ -65,6 +74,8 @@ function Profile() {
       >
         Your Profile
       </Title>
+
+      {/* USER INFO CARD */}
       <ProfileInfo
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -80,6 +91,8 @@ function Profile() {
         </InfoItem>
         <Button primary>Edit Profile</Button>
       </ProfileInfo>
+
+      {/* ORDER HISTORY CARD */}
       <OrderHistory
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,9 +101,9 @@ function Profile() {
         <h2>Order History</h2>
         {orderHistory.map((order) => (
           <Order key={order.id}>
-            <p>Order ID: {order.id}</p>
-            <p>Date: {order.date}</p>
-            <p>Total: ${order.total.toFixed(2)}</p>
+            <p>🧾 Order ID: {order.id}</p>
+            <p>📅 Date: {order.date}</p>
+            <p>💰 Total: ${order.total.toFixed(2)}</p>
           </Order>
         ))}
       </OrderHistory>
