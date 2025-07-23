@@ -76,12 +76,20 @@ const ProductImage = styled(motion.img)`
   width: 100%;
   height: 220px;
   object-fit: cover;
-  transition: transform 0.5s ease-out; /* Smooth scaling transition */
-  
+  border: 2px solid rgb(65, 21, 5); /* light coffee border */
+  border-radius: 12px;
+  box-sizing: border-box;
+  background-color: #f5f5f5; /* subtle warm base behind images */
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+
   &:hover {
-    transform: scale(1.05); /* Scale the image on hover */
+    transform: scale(1.05);
+    border-color: #6d4c41; /* rich coffee brown */
+    box-shadow: 0 8px 20px rgba(109, 76, 65, 0.3); /* soft coffee glow */
+    filter: brightness(1.03) contrast(1.05); /* gently brighten */
   }
 `;
+
 
 
 const Overlay = styled.div`
@@ -842,7 +850,7 @@ function Shop() {
                       transition={{ duration: 0.5 }}
                     >
                       <div style={{ position: "relative" }}>
-                        <ProductImage src={product.image} alt={product.name} />
+                        <ProductImage src={product.image} alt={product.name}  />
 
                         <div
                           onClick={() => toggleHeart(product.id)}
