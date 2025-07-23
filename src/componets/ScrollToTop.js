@@ -18,8 +18,7 @@ const ScrollButton = styled.button`
 `;
 
 const ScrollToTop = () => {
-  const location = useLocation();
-
+const { pathname } = useLocation();
   // Scroll to top instantly on route change
   useEffect(() => {
     window.scrollTo({
