@@ -6,176 +6,323 @@ import FooterImg from './FooterImg.png';
 
 // Styled components for the footer
 const FooterContainer = styled.footer`
-background: linear-gradient(90deg, rgba(148, 93, 56, 1), rgba(56, 39, 16, 1));
-color: #fffbeb;
-padding: 1.5rem 2rem;
-text-align: center;
-position: relative;
-bottom: 0;
-width: 100%;
-box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-`;
-
-const FooterContent = styled.div`
-max-width: 1200px;
-margin: 0 auto;
-
-p {
-  margin: 0.5rem 0;
-  font-size: 1rem;
-  line-height: 1.5;
-
-  &:first-child {
-    font-weight: 500;
-  }
-}
-
-@media (max-width: 768px) {
+  background: linear-gradient(90deg, rgba(148, 93, 56, 1), rgba(56, 39, 16, 1));
+  color: #fffbeb;
+  padding: 1.5rem 0.5rem 1.5rem;  /* Reduced left/right padding */
   text-align: center;
-  padding: 1rem;
-}
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const InfoSection = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: flex-start;
-margin: 2rem 0;
-flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
-
-.infoimg {
-  height: auto;
-  max-height: 10rem;
-  width: 90%;
-  max-width: 10rem; /* Restrict size for smaller devices */
-  margin-bottom: 1rem;
-  margin-left:-130px;
-}
-
-.info-wrapper {
   display: flex;
-  flex-wrap: wrap;
- 
-  width: 90%; /* Ensure it adapts to smaller devices */
-}
+  justify-content: space-between;
+  align-items: center;  /* Changed to center for better alignment */
+  margin: 1.5rem 0;
+  gap: 2.5rem;
 
-@media (max-width: 768px) {
-  flex-direction: column;
-  align-items: center;
+  .logo-section {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+  }
 
   .infoimg {
-    max-width: 8rem;
-    max-height: auto;
+    height: auto;
+    width: 200px;  /* Increased from 200px */
+    object-fit: contain;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 15px;
+
+    &:hover {
+      transform: scale(1.2) rotate(1deg);
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.3)) brightness(1.9);
+    }
   }
 
   .info-wrapper {
-    justify-content: center;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;  /* Reduced gap */
+    flex: 1;
   }
-}
-`;
 
-const InfoColumn = styled.div`
-flex: 1 1 calc(25% - 2rem); /* Flexible width with margin space */
-margin: 0 1rem;
-text-align: left;
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+    
+    .logo-section {
+      padding: 0.8rem;
+    }
 
-h3 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #ffd6a5;
-}
+    .infoimg {
+      width: 220px;
+    }
 
-p,
-a {
-  font-size: 0.9rem;
-  color: #fffbeb;
-  text-decoration: none;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-a:hover {
-  color: #fbbf24;
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  flex: 1 1 100%; /* Full width on smaller devices */
-  text-align: center;
-}
-`;
-
-const SocialIcons = styled.div`
-display: flex;
-justify-content: center;
-gap: 1rem;
-margin-top: 1.5rem;
-
-@media (max-width: 768px) {
-  gap: 1.2rem;
-}
-`;
-
-const SocialIcon = styled(motion.a)`
-color: #fffbeb;
-font-size: 1.8rem;
-text-decoration: none;
-padding: 0.5rem;
-border-radius: 50%;
-transition: color 0.3s ease, transform 0.3s ease;
-
-&:hover {
-  transform: scale(1.2);
-  color: #fbbf24;
-}
-
-&[href*="facebook.com"]:hover {
-  color: #3b5998; /* Facebook Blue */
-}
-
-&[href*="twitter.com"]:hover {
-  color: #000000; /* X Black */
-}
-
-&[href*="instagram.com"]:hover {
-  color: #e4405f; /* Instagram Pink */
-}
-
-&[href*="linkedin.com"]:hover {
-  color: #0077b5; /* LinkedIn Blue */
-}
-
-  &[href*="github.com"]:hover {
-    color: #1C2025; /* GitHub Black */
+    .info-wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
   }
 
   @media (max-width: 768px) {
-    font-size: 1.3rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    .logo-section {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: transparent;
+    }
+
+    .infoimg {
+      width: 180px;
+    }
+
+    .info-wrapper {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      width: 100%;
+    }
+  }
+`;
+
+const FooterContent = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+
+  p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+
+    &:first-child {
+      font-weight: 500;
+    }
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+    padding: 0.5rem;
+  }
+`;
+
+const InfoColumn = styled.div`
+  text-align: left;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: #ffd6a5;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #fffbeb;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  a {
+    font-size: 0.9rem;
+    color: #fffbeb;
+    text-decoration: none;
+    margin-bottom: 0.4rem;
+    display: block;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      color: #fbbf24;
+      transform: translateX(5px);
+      opacity: 1;
+    }
+  }
+
+  /* Fix alignment for payment section */
+  h3:nth-of-type(2) {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+
+    a:hover {
+      transform: none;
+    }
+
+  }
+`;
+
+const SocialIcons = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+
+  @media (max-width: 768px) {
+    gap: 0.8rem;
+  }
+`;
+
+const SocialIcon = styled(motion.a)`
+  color: #fffbeb;
+  font-size: 1.8rem;
+  text-decoration: none;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &[href*="facebook.com"]:hover {
+    color: #3b5998;
+    background: rgba(59, 89, 152, 0.2);
+  }
+
+  &[href*="twitter.com"]:hover {
+    color: #000000;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  &[href*="instagram.com"]:hover {
+    color: #e4405f;
+    background: rgba(228, 64, 95, 0.2);
+  }
+
+  &[href*="linkedin.com"]:hover {
+    color: #0077b5;
+    background: rgba(0, 119, 181, 0.2);
+  }
+
+  &[href*="github.com"]:hover {
+    color: #1C2025;
+    background: rgba(28, 32, 37, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
   }
 `;
 
 const Divider = styled.hr`
-border: none;
-height: 2px;
-background: #ffd6a5;
-margin: 2rem auto;
-width: 80%; /* Adjust width for responsiveness */
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ffd6a5, transparent);
+  margin: 1.5rem auto;
+  width: 80%;
 `;
 
 const PaymentIcons = styled.div`
-  display: flex;
-  align-items: center; 
-  gap: 1.5em; 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
   margin-top: 1rem;
+  width: 110px;
 
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
+    width: 100px;
+    margin: 1rem auto 0;
+    gap: 0.8rem;
+  }
+`;
+
+const PaymentIcon = styled(motion.a)`
+  color: #fffbeb;
+  font-size: 3.5rem;
+  text-decoration: center;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: centre;
-  gap: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
   i {
-  height: 0.5rem;
-    }
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  &[href*="apple.com"]:hover {
+    color: #000000;
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  &[href*="google.com"]:hover {
+    color: #4285F4;
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  &[href*="mastercard.com"]:hover {
+    color: #EB001B;
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  &[href*="visa.com"]:hover {
+    color: #1A1F71;
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2.8rem;
+    width: 40px;
+    height: 40px;
+
+  }
+`;
+
+
+const CopyrightSection = styled.div`
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 214, 165, 0.3);
+  
+  p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0.3rem 0;
   }
 `;
 
@@ -183,62 +330,55 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterContent>
-
         {/* Social Icons */}
         <SocialIcons>
-
           <SocialIcon
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             aria-label="Facebook">
-            <i className="fab fa-facebook-f"></i> {/* Facebook icon */}
+            <i className="fab fa-facebook-f"></i>
           </SocialIcon>
 
           <SocialIcon
             href="https://www.linkedin.com/in/mohamed-mujtaba-290885249/"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             aria-label="LinkedIn"
             role="link">
-          <i className="fab fa-linkedin-in"></i>  {/* LinkedIn icon */}
+            <i className="fab fa-linkedin-in"></i>
           </SocialIcon>
 
           <SocialIcon
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             aria-label="Twitter"
             role="link">
-            <i className="fab fa-x-twitter"></i>  {/* Twitter icon */}
+            <i className="fab fa-x-twitter"></i>
           </SocialIcon>
-
-      
 
           <SocialIcon
             href="https://www.instagram.com/hy.mujtaba/"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2 }}
-            aria-label="Instagram"
-          >
-            <i className="fab fa-instagram"></i> {/* Instagram icon */}
+            whileHover={{ scale: 1.1 }}
+            aria-label="Instagram">
+            <i className="fab fa-instagram"></i>
           </SocialIcon>
 
           <SocialIcon
             href="https://github.com/Mujtabaa07/coffeeShop"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             aria-label="GitHub"
-            role="link"
-          >
-            <i className="fab fa-github"></i> {/* GitHub icon */}
+            role="link">
+            <i className="fab fa-github"></i>
           </SocialIcon>
-
         </SocialIcons>
 
         {/* Divider */}
@@ -246,102 +386,99 @@ function Footer() {
 
         {/* Informational Sections */}
         <InfoSection>
-        <img src={FooterImg} alt="Footer" className="infoimg"/>
-        <div className="info-wrapper">
-        <InfoColumn>
-            <h3>About Us</h3>
-            <p>
-              Founded in 2010, MsCafe is dedicated to serving the finest coffee
-              with passion and expertise. We source our beans from sustainable
-              farms across the globe.
-            </p>
-          </InfoColumn>
-          <InfoColumn  >
-            <h3>Quick Links</h3>
-            <Link to="/">Home</Link>
-            <Link to="/shop">Shop</Link>
-            <Link to="/about">About</Link>
-            <Link to="/blog">Blog</Link>
-            <Link to="/contact">Contact</Link>
-            <Link to="/testimonial">Testimonial</Link>
-            <Link to="/contributor">Contributors</Link>
-          </InfoColumn>
-          <InfoColumn>
-            <h3>Contact Us</h3>
-            <p><a href="mailto:contact@mscafe.com">✉️ contact@mscafe.com</a></p>
-            <p><a href="tel:+11234567890">☎️ (123) 456-7890</a></p>
-            <h3>We Accept</h3>
-            <PaymentIcons>
-  <SocialIcon
-    href="https://www.apple.com/apple-pay/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.6 }}
-    whileHover={{ scale: 3.2, color: 'black' }}  // Set the hover color
-    aria-label="Apple Pay"
-    role="link"
-  >
-    <i className="fa-brands fa-apple-pay"></i> {/* Apple Pay icon */}
-  </SocialIcon>
-
-  <SocialIcon
-    href="https://pay.google.com/intl/en_in/about/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.6 }}
-    whileHover={{ scale: 3.2, color: '#4285F4' }}  // Google Pay color
-    aria-label="G Pay"
-    role="link"
-  >
-    <i className="fa-brands fa-google-pay"></i> {/* GPay icon */}
-  </SocialIcon>
-
-  <SocialIcon
-    href="https://redemption.mastercard.com/#/user/login?language=en-US"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.2 }}
-    whileHover={{ scale: 3.2, color: '#E40046' }}  // Mastercard color
-    aria-label="Mastercard"
-    role="link"
-  >
-    <i className="fa-brands fa-cc-mastercard"></i> {/* Mastercard icon */}
-  </SocialIcon>
-
-  <SocialIcon
-    href="https://www.visa.com.au/en_au/account/login"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.2 }}
-    whileHover={{ scale: 3.2, color: '#1A1F71' }}  // Visa color
-    aria-label="Visa"
-    role="link"
-  >
-    <i className="fa-brands fa-cc-visa"></i> {/* Visa icon */}
-  </SocialIcon>
-</PaymentIcons>
-
-          </InfoColumn>
-          <InfoColumn>
-            <h3>Location</h3>
-            <p>123 Coffee St, Bean Town, USA</p>
-            <p>
-              <a
-                href="https://www.google.com/maps"
+          <div className="logo-section">
+            <img src={FooterImg} alt="Footer" className="infoimg"/>
+          </div>
+          
+          <div className="info-wrapper">
+            <InfoColumn>
+              <h3>About Us</h3>
+              <p>
+                Founded in 2010, MsCafe is dedicated to serving the finest coffee
+                with passion and expertise. We source our beans from sustainable
+                farms across the globe.
+              </p>
+            </InfoColumn>
+            
+            <InfoColumn>
+              <h3>Quick Links</h3>
+              <Link to="/">Home</Link>
+              <Link to="/shop">Shop</Link>
+              <Link to="/about">About</Link>
+              <Link to="/blog">Blog</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="/testimonial">Testimonial</Link>
+              <Link to="/contributor">Contributors</Link>
+            </InfoColumn>
+            
+            <InfoColumn>
+              <h3>Contact Us</h3>
+              <p><a href="mailto:contact@mscafe.com">✉️ contact@mscafe.com</a></p>
+              <p><a href="tel:+11234567890">☎️ (123) 456-7890</a></p>
+              <h3 style={{ marginTop: '1rem' }}>We Accept</h3>
+              <PaymentIcons>
+              <PaymentIcon
+                href="https://www.apple.com/apple-pay/"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
-                View on Map
-              </a>
-            </p>
-          </InfoColumn>
-        </div>
-        
+                whileHover={{ scale: 1.15 }}
+                aria-label="Apple Pay"
+                role="link">
+                <i className="fa-brands fa-apple-pay"></i>
+              </PaymentIcon>
+
+              <PaymentIcon
+                href="https://pay.google.com/intl/en_in/about/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                aria-label="G Pay"
+                role="link">
+                <i className="fa-brands fa-google-pay"></i>
+              </PaymentIcon>
+
+              <PaymentIcon
+                href="https://redemption.mastercard.com/#/user/login?language=en-US"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                aria-label="Mastercard"
+                role="link">
+                <i className="fa-brands fa-cc-mastercard"></i>
+              </PaymentIcon>
+
+              <PaymentIcon
+                href="https://www.visa.com.au/en_au/account/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                aria-label="Visa"
+                role="link">
+                <i className="fa-brands fa-cc-visa"></i>
+              </PaymentIcon>
+            </PaymentIcons>
+            </InfoColumn>
+            
+            <InfoColumn>
+              <h3>Location</h3>
+              <p>123 Coffee St, Bean Town, USA</p>
+              <p>
+                <a
+                  href="https://www.google.com/maps"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  📍 View on Map
+                </a>
+              </p>
+            </InfoColumn>
+          </div>
         </InfoSection>
 
         {/* Footer Text */}
-        <p>&copy; {new Date().getFullYear()} MsCafe. All rights reserved.</p>
-        <p>Made with ♥ by MsCoder</p>
+        <CopyrightSection>
+          <p>&copy; {new Date().getFullYear()} MsCafe. All rights reserved.</p>
+          <p>Made with ♥ by MsCoder</p>
+        </CopyrightSection>
       </FooterContent>
     </FooterContainer>
   );
