@@ -38,6 +38,8 @@ import Favorites from './Pages/favorites';
 import Reviews from './componets/Reviews';
 import AnimatedCursor from 'react-animated-cursor';
 
+import Chatbot from "./componets/Chatbot";
+
 // Styled Containers
 const AppContainer = styled.div`
   display: flex;
@@ -109,6 +111,10 @@ function App() {
           </ContentContainer>
 
           <Reviews />
+
+          {/* Add Chatbot so it floats on every page */}
+          <Chatbot />
+
           <Footer />
         </AppContainer>
       </Router>
