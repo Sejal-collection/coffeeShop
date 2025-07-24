@@ -41,6 +41,7 @@ const ButtonContainer = styled.div`
 
 const Button = ({ children, primary, onClick, noMargin, ...props }) => {
   return (
+    <ButtonContainer>
     <StyledButton
       primary={primary}
       onClick={onClick}
@@ -52,6 +53,7 @@ const Button = ({ children, primary, onClick, noMargin, ...props }) => {
     >
       {children}
     </StyledButton>
+    </ButtonContainer>
   );
 };
 
