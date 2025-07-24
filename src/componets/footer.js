@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import FooterImg from './FooterImg.png'; 
+import FooterImg from './FooterImg.png';
 
 // Styled components for the footer
 const FooterContainer = styled.footer`
@@ -126,32 +126,68 @@ border-radius: 50%;
 transition: color 0.3s ease, transform 0.3s ease;
 
 &:hover {
-  transform: scale(1.2);
-  color: #fbbf24;
+transform: scale(1.2);
+color: #fbbf24;
 }
 
 &[href*="facebook.com"]:hover {
-  color: #3b5998; /* Facebook Blue */
+color: #3b5998; /* Facebook Blue */
 }
 
 &[href*="twitter.com"]:hover {
-  color: #000000; /* X Black */
+color: #000000; /* X Black */
 }
 
 &[href*="instagram.com"]:hover {
-  color: #e4405f; /* Instagram Pink */
+color: #e4405f; /* Instagram Pink */
 }
 
 &[href*="linkedin.com"]:hover {
-  color: #0077b5; /* LinkedIn Blue */
+color: #0077b5; /* LinkedIn Blue */
 }
 
-  &[href*="github.com"]:hover {
-    color: #1C2025; /* GitHub Black */
+&[href*="github.com"]:hover {
+color: #1C2025; /* GitHub Black */
+}
+
+@media (max-width: 768px) {
+font-size: 1.3rem;
+}
+`;
+
+const SocialMediaIcon = styled(SocialIcon)`
+  padding: 0.8rem;
+  border-radius: 12px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 50px;
+  
+  i {
+    font-size: 1.6rem;
+  }
+  
+  i.fa-facebook-f {
+    font-size: 1.6rem;
   }
 
-  @media (max-width: 768px) {
-    font-size: 1.3rem;
+  &:hover {
+    transform: scale(1.15) translateY(-2px);
+    background: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(0px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  &[href*="github.com"]:hover {
+    color: #333333;
   }
 `;
 
@@ -186,59 +222,53 @@ function Footer() {
 
         {/* Social Icons */}
         <SocialIcons>
-
-          <SocialIcon
+          <SocialMediaIcon
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
             aria-label="Facebook">
-            <i className="fab fa-facebook-f"></i> {/* Facebook icon */}
-          </SocialIcon>
+            <i className="fab fa-facebook-f"></i>
+          </SocialMediaIcon>
 
-          <SocialIcon
+          <SocialMediaIcon
             href="https://www.linkedin.com/in/mohamed-mujtaba-290885249/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
             aria-label="LinkedIn"
             role="link">
-          <i className="fab fa-linkedin-in"></i>  {/* LinkedIn icon */}
-          </SocialIcon>
+            <i className="fab fa-linkedin-in"></i>
+          </SocialMediaIcon>
 
-          <SocialIcon
+          <SocialMediaIcon
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
             aria-label="Twitter"
             role="link">
-            <i className="fab fa-x-twitter"></i>  {/* Twitter icon */}
-          </SocialIcon>
+            <i className="fab fa-x-twitter"></i>
+          </SocialMediaIcon>
 
-      
-
-          <SocialIcon
+          <SocialMediaIcon
             href="https://www.instagram.com/hy.mujtaba/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
-            aria-label="Instagram"
-          >
-            <i className="fab fa-instagram"></i> {/* Instagram icon */}
-          </SocialIcon>
+            aria-label="Instagram">
+            <i className="fab fa-instagram"></i>
+          </SocialMediaIcon>
 
-          <SocialIcon
+          <SocialMediaIcon
             href="https://github.com/Mujtabaa07/coffeeShop"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
             aria-label="GitHub"
-            role="link"
-          >
-            <i className="fab fa-github"></i> {/* GitHub icon */}
-          </SocialIcon>
-
+            role="link">
+            <i className="fab fa-github"></i>
+          </SocialMediaIcon>
         </SocialIcons>
 
         {/* Divider */}
@@ -246,97 +276,97 @@ function Footer() {
 
         {/* Informational Sections */}
         <InfoSection>
-        <img src={FooterImg} alt="Footer" className="infoimg"/>
-        <div className="info-wrapper">
-        <InfoColumn>
-            <h3>About Us</h3>
-            <p>
-              Founded in 2010, MsCafe is dedicated to serving the finest coffee
-              with passion and expertise. We source our beans from sustainable
-              farms across the globe.
-            </p>
-          </InfoColumn>
-          <InfoColumn  >
-            <h3>Quick Links</h3>
-            <Link to="/">Home</Link>
-            <Link to="/shop">Shop</Link>
-            <Link to="/about">About</Link>
-            <Link to="/blog">Blog</Link>
-            <Link to="/contact">Contact</Link>
-            <Link to="/testimonial">Testimonial</Link>
-            <Link to="/contributor">Contributors</Link>
-          </InfoColumn>
-          <InfoColumn>
-            <h3>Contact Us</h3>
-            <p><a href="mailto:contact@mscafe.com">✉️ contact@mscafe.com</a></p>
-            <p><a href="tel:+11234567890">☎️ (123) 456-7890</a></p>
-            <h3>We Accept</h3>
-            <PaymentIcons>
-  <SocialIcon
-    href="https://www.apple.com/apple-pay/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.6 }}
-    whileHover={{ scale: 3.2, color: 'black' }}  // Set the hover color
-    aria-label="Apple Pay"
-    role="link"
-  >
-    <i className="fa-brands fa-apple-pay"></i> {/* Apple Pay icon */}
-  </SocialIcon>
+          <img src={FooterImg} alt="Footer" className="infoimg" />
+          <div className="info-wrapper">
+            <InfoColumn>
+              <h3>About Us</h3>
+              <p>
+                Founded in 2010, MsCafe is dedicated to serving the finest coffee
+                with passion and expertise. We source our beans from sustainable
+                farms across the globe.
+              </p>
+            </InfoColumn>
+            <InfoColumn  >
+              <h3>Quick Links</h3>
+              <Link to="/">Home</Link>
+              <Link to="/shop">Shop</Link>
+              <Link to="/about">About</Link>
+              <Link to="/blog">Blog</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="/testimonial">Testimonial</Link>
+              <Link to="/contributor">Contributors</Link>
+            </InfoColumn>
+            <InfoColumn>
+              <h3>Contact Us</h3>
+              <p><a href="mailto:contact@mscafe.com">✉️ contact@mscafe.com</a></p>
+              <p><a href="tel:+11234567890">☎️ (123) 456-7890</a></p>
+              <h3>We Accept</h3>
+              <PaymentIcons>
+                <SocialIcon
+                  href="https://www.apple.com/apple-pay/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ scale: 2.6 }}
+                  whileHover={{ scale: 3.2, color: 'black' }}  // Set the hover color
+                  aria-label="Apple Pay"
+                  role="link"
+                >
+                  <i className="fa-brands fa-apple-pay"></i> {/* Apple Pay icon */}
+                </SocialIcon>
 
-  <SocialIcon
-    href="https://pay.google.com/intl/en_in/about/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.6 }}
-    whileHover={{ scale: 3.2, color: '#4285F4' }}  // Google Pay color
-    aria-label="G Pay"
-    role="link"
-  >
-    <i className="fa-brands fa-google-pay"></i> {/* GPay icon */}
-  </SocialIcon>
+                <SocialIcon
+                  href="https://pay.google.com/intl/en_in/about/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ scale: 2.6 }}
+                  whileHover={{ scale: 3.2, color: '#4285F4' }}  // Google Pay color
+                  aria-label="G Pay"
+                  role="link"
+                >
+                  <i className="fa-brands fa-google-pay"></i> {/* GPay icon */}
+                </SocialIcon>
 
-  <SocialIcon
-    href="https://redemption.mastercard.com/#/user/login?language=en-US"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.2 }}
-    whileHover={{ scale: 3.2, color: '#E40046' }}  // Mastercard color
-    aria-label="Mastercard"
-    role="link"
-  >
-    <i className="fa-brands fa-cc-mastercard"></i> {/* Mastercard icon */}
-  </SocialIcon>
+                <SocialIcon
+                  href="https://redemption.mastercard.com/#/user/login?language=en-US"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ scale: 2.2 }}
+                  whileHover={{ scale: 3.2, color: '#E40046' }}  // Mastercard color
+                  aria-label="Mastercard"
+                  role="link"
+                >
+                  <i className="fa-brands fa-cc-mastercard"></i> {/* Mastercard icon */}
+                </SocialIcon>
 
-  <SocialIcon
-    href="https://www.visa.com.au/en_au/account/login"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ scale: 2.2 }}
-    whileHover={{ scale: 3.2, color: '#1A1F71' }}  // Visa color
-    aria-label="Visa"
-    role="link"
-  >
-    <i className="fa-brands fa-cc-visa"></i> {/* Visa icon */}
-  </SocialIcon>
-</PaymentIcons>
+                <SocialIcon
+                  href="https://www.visa.com.au/en_au/account/login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ scale: 2.2 }}
+                  whileHover={{ scale: 3.2, color: '#1A1F71' }}  // Visa color
+                  aria-label="Visa"
+                  role="link"
+                >
+                  <i className="fa-brands fa-cc-visa"></i> {/* Visa icon */}
+                </SocialIcon>
+              </PaymentIcons>
 
-          </InfoColumn>
-          <InfoColumn>
-            <h3>Location</h3>
-            <p>123 Coffee St, Bean Town, USA</p>
-            <p>
-              <a
-                href="https://www.google.com/maps"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View on Map
-              </a>
-            </p>
-          </InfoColumn>
-        </div>
-        
+            </InfoColumn>
+            <InfoColumn>
+              <h3>Location</h3>
+              <p>123 Coffee St, Bean Town, USA</p>
+              <p>
+                <a
+                  href="https://www.google.com/maps"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View on Map
+                </a>
+              </p>
+            </InfoColumn>
+          </div>
+
         </InfoSection>
 
         {/* Footer Text */}
