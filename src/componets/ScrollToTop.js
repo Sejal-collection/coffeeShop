@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+
 const ScrollButton = styled.button`
   position: fixed;
   bottom: 30px;
@@ -18,8 +19,23 @@ const ScrollButton = styled.button`
 `;
 
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
+const ScrollButton = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #7c2214;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: ${({ visible }) => (visible ? "block" : "none")};
+  z-index: 1000;
+`;
+
+const ScrollToTop = () => {
+const { pathname } = useLocation();
 
   // Scroll to top instantly on route change
   useEffect(() => {
