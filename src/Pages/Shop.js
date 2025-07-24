@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useState, useRef } from 'react'; // import useState, useRef hooks
 import { useDispatch } from 'react-redux';
-// import React, { useState } from 'react';
-// import { addToCart, removeFromCart } from '../Store/cartSlice';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { addToCart } from '../Store/cartSlice';
-import { useState } from 'react';
 import Button from '../componets/Button';
-import { toast, ToastContainer } from 'react-toastify'; // Add this import
+import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 import DynamicText from "./dynamicText";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -76,12 +73,20 @@ const ProductImage = styled(motion.img)`
   width: 100%;
   height: 220px;
   object-fit: cover;
-  transition: transform 0.5s ease-out; /* Smooth scaling transition */
-  
+  border: 2px solid rgb(65, 21, 5); /* light coffee border */
+  border-radius: 12px;
+  box-sizing: border-box;
+  background-color: #f5f5f5; /* subtle warm base behind images */
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+
   &:hover {
-    transform: scale(1.05); /* Scale the image on hover */
+    transform: scale(1.05);
+    border-color: #6d4c41; /* rich coffee brown */
+    box-shadow: 0 8px 20px rgba(109, 76, 65, 0.3); /* soft coffee glow */
+    filter: brightness(1.03) contrast(1.05); /* gently brighten */
   }
 `;
+
 
 
 const Overlay = styled.div`
@@ -367,7 +372,7 @@ const products = [
   },
 
   {
-    id: 19,
+    id: 25,
     name: "Irish Coffee",
     price: 7.2,
     image:
@@ -685,6 +690,33 @@ function Shop() {
   const [category, setCategory] = useState("hot");
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Added useRef hooks to scroll to sections
+  const hotBeveragesRef = useRef(null);
+  const coldBeveragesRef = useRef(null);
+  const foodRef = useRef(null);
+
+  const scrollToSection = (sectionType) => {
+    let ref;
+    switch (sectionType) {
+      case 'hot':
+        ref = hotBeveragesRef;
+        break;
+      case 'cold':
+        ref = coldBeveragesRef;
+        break;
+      case 'food':
+        ref = foodRef;
+        break;
+      default:
+        return;
+    }
+
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
     toast.success(`${product.name} added to cart!`);
@@ -763,17 +795,20 @@ function Shop() {
         variant="text"
         aria-label="Basic button group"
         sx={{
-          display:'flex',
-          alignItems:'center', //to align buttons in center
-          flexDirection:{xs:'column',sm:'column',md:'row'}, //to make button group adjust to different screen size
-          justifyContent:'center', 
+          display: 'flex',
+          alignItems: 'center', //to align buttons in center
+          flexDirection: { xs: 'column', sm: 'column', md: 'row' }, //to make button group adjust to different screen size
+          justifyContent: 'center',
           borderRadius: "8px",
           padding: "4px",
-          
+
         }}
       >
-        <Button
-          onClick={() => setCategory("hot")}
+        <Button 
+          onClick={() => {
+            setCategory("hot");
+            setTimeout(() => scrollToSection("hot"), 100); // added Smooth scroll to section
+          }}
           style={{
             width: "200px",
             backgroundColor: category === "hot" ? "#f0efdc" : "#7c2414",
@@ -783,7 +818,10 @@ function Shop() {
           Hot Beverages
         </Button>
         <Button
-          onClick={() => setCategory("cold")}
+          onClick={() => {
+            setCategory("cold");
+            setTimeout(() => scrollToSection("cold"), 100);
+          }}
           style={{
             width: "200px",
             backgroundColor: category === "cold" ? "#f0efdc" : "#7c2414",
@@ -793,7 +831,10 @@ function Shop() {
           Cold Beverages
         </Button>
         <Button
-          onClick={() => setCategory("food")}
+          onClick={() => {
+            setCategory("food");
+            setTimeout(() => scrollToSection("food"), 100);
+          }}
           style={{
             width: "200px",
             backgroundColor: category === "food" ? "#f0efdc" : "#7c2414",
@@ -821,13 +862,19 @@ function Shop() {
 
           return (
             <React.Fragment key={section}>
-              <Title
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                {section === "hot" ? "Our Hot Beverages" : section === "cold" ? "Our Cold Beverages" : section === "food" ? "Our Food Selection" : ""}
-              </Title>
+              <div ref={
+                section === "hot" ? hotBeveragesRef :
+                  section === "cold" ? coldBeveragesRef :
+                    section === "food" ? foodRef : null
+              }>
+                <Title
+                  initial={{ opacity: 0, y: -50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {section === "hot" ? "Our Hot Beverages" : section === "cold" ? "Our Cold Beverages" : section === "food" ? "Our Food Selection" : ""}
+                </Title>
+              </div>
               <ProductGrid>
                 {sectionProducts.map((product) => {
                   // If there's a search query, only show products that match
@@ -842,7 +889,7 @@ function Shop() {
                       transition={{ duration: 0.5 }}
                     >
                       <div style={{ position: "relative" }}>
-                        <ProductImage src={product.image} alt={product.name} />
+                        <ProductImage src={product.image} alt={product.name}  />
 
                         <div
                           onClick={() => toggleHeart(product.id)}
