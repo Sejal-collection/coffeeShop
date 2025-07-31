@@ -58,7 +58,7 @@ git clone https://github.com/Mujtabaa07/coffeeShop.git
 cd coffeeShop
 ```
 
-## Google OAuth Setup
+### Step 2: Google OAuth Setup
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select existing one
 3. Enable Google+ API
@@ -67,22 +67,22 @@ cd coffeeShop
 6. Set authorized redirect URIs: `http://localhost:5001/api/auth/google/callback`
 7. Copy Client ID and Client Secret
 
-## MongoDB Atlas Setup
+### Step 3: MongoDB Atlas Setup
 
-1. Create Account
+#### 1. Create Account
 - Go to MongoDB Atlas
 - Click "Try Free"
 - Sign up with email or Google
 - Verify your email address
 
-2. Create Cluster
+#### 2. Create Cluster
 - Choose deployment: Select "Shared" (Free tier)
 - Cloud Provider: Choose AWS, Google Cloud, or Azure
 - Region: Select closest to your location
 - Cluster Name: mscafe-cluster (or your preferred name)
 - Click "Create Cluster" (takes 3-5 minutes)
 
-3. Create Database User
+#### 3. Create Database User
 - Go to "Database Access" in left sidebar
 - Click "Add New Database User"
 - Authentication Method: Password
@@ -91,28 +91,28 @@ cd coffeeShop
 - Database User Privileges: Select "Read and write to any database"
 - Click "Add User"
 
-4. Configure Network Access
+#### 4. Configure Network Access
 - Go to "Network Access" in left sidebar
 - Click "Add IP Address"
 - For Development: Click "Allow Access from Anywhere" (0.0.0.0/0)
 - For Production: Add your server's specific IP
 - Click "Confirm"
 
-5. Get Connection String
+#### 5. Get Connection String
 - Go to "Clusters" and click "Connect"
 - Choose "Connect your application"
 - Driver: Node.js
 - Version: 4.1 or later
 - Copy connection string
 
-## JWT_SECRET
+### Step 4: JWT_SECRET
 ```bash
 # Run this cmd in your backend directory
 
 node -e "console.log('JWT_SECRET=' + require('crypto').randomBytes(64).toString('hex'))" 
 ```
 
-## SESSION_SECRET
+### Step 5: SESSION_SECRET
 ```bash
 # Run this cmd in your backend directory
 
@@ -120,28 +120,26 @@ node -e "console.log('SESSION_SECRET=' + require('crypto').randomBytes(64).toStr
 ```
 
 ## Installation
-1. Install frontend dependencies
+### 1. Install frontend dependencies
 ```bash
   npm install
 ```
-2. Install backend dependencies
+
+### 2. Install backend dependencies
 ```bash
 cd backend
 npm install
 ```
 
-
-3. Set up environment variables
-
+### 3. Set up environment variables
 ```bash
 cp .env.example .env
 # Fill in your Google OAuth credentials and MongoDB URI
 ```
 
-4. Start MongoDB (if running locally)
+### 4. Start MongoDB (if running locally)
 
-5. Run the application
-
+### 5. Run the application
 ```bash
 # Run both frontend and backend
 npm run dev
@@ -151,6 +149,7 @@ npm run dev
 # Frontend: npm start
 ```
 Once the server is running, you can view the app at (http://localhost:3000).
+
 
 ## Usage
 **To use the app:**
