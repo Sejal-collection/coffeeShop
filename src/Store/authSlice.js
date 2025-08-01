@@ -1,12 +1,14 @@
 // authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+
 // Async thunks for Google Authentication
 export const googleLogin = createAsyncThunk(
   'auth/googleLogin',
   async (credential, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5001/api'}/auth/google`, {
+      const response = await fetch(`${API_URL}/auth/google`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +42,7 @@ export const getCurrentUser = createAsyncThunk(
         throw new Error('No token found');
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5001/api'}/auth/user`, {
+      const response = await fetch(`${API_URL}/auth/user`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -72,7 +74,7 @@ export const updateProfile = createAsyncThunk(
         throw new Error('No token found');
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5001/api'}/auth/profile`, {
+      const response = await fetch(`${API_URL}/auth/profile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -104,7 +106,7 @@ export const logoutUser = createAsyncThunk(
       const token = localStorage.getItem('token');
       
       if (token) {
-        await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5001/api'}/auth/logout`, {
+        await fetch(`${API_URL}/auth/logout`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,

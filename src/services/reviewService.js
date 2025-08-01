@@ -1,5 +1,5 @@
 // reviewService.js - Service for handling product reviews
-const API_BASE_URL = process.env.REACT_APP_API_URL || '';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 class ReviewService {
   // Get authorization headers
@@ -14,7 +14,7 @@ class ReviewService {
   // Get reviews for a product
   async getProductReviews(productId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews/product/${productId}`, {
+      const response = await fetch(`${API_URL}/reviews/product/${productId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
       });
@@ -35,7 +35,7 @@ class ReviewService {
   // Create a new review
   async createReview(reviewData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews`, {
+      const response = await fetch(`${API_URL}/reviews`, {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify(reviewData)
@@ -57,7 +57,7 @@ class ReviewService {
   // Update a review
   async updateReview(reviewId, reviewData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews/${reviewId}`, {
+      const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
         method: 'PUT',
         headers: this.getAuthHeaders(),
         body: JSON.stringify(reviewData)
@@ -79,7 +79,7 @@ class ReviewService {
   // Delete a review
   async deleteReview(reviewId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews/${reviewId}`, {
+      const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
         method: 'DELETE',
         headers: this.getAuthHeaders()
       });
@@ -100,7 +100,7 @@ class ReviewService {
   // Mark review as helpful
   async markReviewHelpful(reviewId, isHelpful) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews/${reviewId}/helpful`, {
+      const response = await fetch(`${API_URL}/reviews/${reviewId}/helpful`, {
         method: 'POST',
         headers: this.getAuthHeaders(),
         body: JSON.stringify({ isHelpful })
@@ -122,7 +122,7 @@ class ReviewService {
   // Get user's reviews
   async getUserReviews() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews/user`, {
+      const response = await fetch(`${API_URL}/reviews/user`, {
         method: 'GET',
         headers: this.getAuthHeaders()
       });
@@ -143,7 +143,7 @@ class ReviewService {
   // Get review statistics for a product
   async getReviewStats(productId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/reviews/product/${productId}/stats`, {
+      const response = await fetch(`${API_URL}/reviews/product/${productId}/stats`, {
         method: 'GET',
         headers: this.getAuthHeaders()
       });

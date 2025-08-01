@@ -1,9 +1,5 @@
 // profileService.js - Real-time profile update utilities
-  // Remove item from favorites
-  removeFromFavorites: async (index) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/auth/favorites/${index}`, {t API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 export const ProfileService = {
   // Trigger profile updates across the app

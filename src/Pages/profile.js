@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
-import { updateProfile, addFavoriteOrder, removeFavoriteOrder, addLoyaltyPoints } from '../Store/authSlice';
+import { updateProfile, addFavoriteOrder, removeFavoriteOrder } from '../Store/authSlice';
 import Footer from '../componets/footer';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
