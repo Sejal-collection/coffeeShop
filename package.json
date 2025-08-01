@@ -73,7 +73,7 @@
     "server": "node server.js",
     "dev": "concurrently \"npm run server\" \"npm start\"",
     "install-server": "cd backend && npm install",
-    "heroku-postbuild": "npm run build"
+    "deploy:aws-backend": "powershell -ExecutionPolicy Bypass -File deploy-aws-backend.ps1"
   },
   "eslintConfig": {
     "extends": [

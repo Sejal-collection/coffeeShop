@@ -42,7 +42,7 @@ jobs:
     - name: Build project
       run: npm run build
       env:
-        REACT_APP_API_URL: https://coffeeshop-backend.railway.app
+        REACT_APP_API_URL: http://65.2.81.197:3000
         REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
 
     - name: Upload build artifacts
