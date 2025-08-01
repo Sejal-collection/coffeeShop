@@ -9,7 +9,7 @@ require('dotenv').config();
 
 console.log('🚀 Starting MsCafe Backend Server...');
 console.log('📍 Environment Variables Check:');
-console.log('   PORT:', process.env.PORT || 5000);
+console.log('   PORT:', process.env.PORT || 5001);
 console.log('   NODE_ENV:', process.env.NODE_ENV);
 console.log('   GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID ? '✅ Set' : '❌ Missing');
 console.log('   GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET ? '✅ Set' : '❌ Missing');
@@ -120,7 +120,7 @@ app.use('*', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🎉 Server running on port ${PORT}`);
   console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
   console.log(`🔐 Auth endpoint: http://localhost:${PORT}/api/auth`);
