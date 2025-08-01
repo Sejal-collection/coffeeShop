@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "name": "mscafe-frontend",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot))",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://coffeeshop-backend.railway.app",
+    "REACT_APP_GOOGLE_CLIENT_ID": "@google_client_id"
+  },
+  "build": {
+    "env": {
+      "REACT_APP_API_URL": "https://coffeeshop-backend.railway.app",
+      "REACT_APP_GOOGLE_CLIENT_ID": "@google_client_id"
+    }
+  }
+}
