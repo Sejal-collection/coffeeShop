@@ -1,4 +1,9 @@
 // profileService.js - Real-time profile update utilities
+  // Remove item from favorites
+  removeFromFavorites: async (index) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/auth/favorites/${index}`, {t API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 export const ProfileService = {
   // Trigger profile updates across the app
@@ -14,7 +19,7 @@ export const ProfileService = {
   updateLoyaltyPoints: async (points, orderId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/auth/loyalty/add', {
+      const response = await fetch(`${API_URL}/auth/loyalty/add`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -37,7 +42,7 @@ export const ProfileService = {
   addToFavorites: async (item) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/auth/favorites', {
+      const response = await fetch(`${API_URL}/auth/favorites`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -60,7 +65,7 @@ export const ProfileService = {
   removeFromFavorites: async (index) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5001/api/auth/favorites/${index}`, {
+      const response = await fetch(`${API_URL}/auth/favorites/${index}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -109,7 +114,7 @@ export const ProfileService = {
   getUserStats: async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/auth/profile/stats', {
+      const response = await fetch(`${API_URL}/auth/profile/stats`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

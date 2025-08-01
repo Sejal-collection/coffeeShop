@@ -31,13 +31,15 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://coffeeshop-backend.railway.app",
-    "REACT_APP_GOOGLE_CLIENT_ID": "@google_client_id"
+    "REACT_APP_API_URL": "https://coffeeshop-h6hk.onrender.com/api",
+    "REACT_APP_BACKEND_URL": "https://coffeeshop-h6hk.onrender.com",
+    "REACT_APP_GOOGLE_CLIENT_ID": "715685911320-ar5soc2f1ggkqv2ivesl4ob7vaodh6ld.apps.googleusercontent.com"
   },
   "build": {
     "env": {
-      "REACT_APP_API_URL": "https://coffeeshop-backend.railway.app",
-      "REACT_APP_GOOGLE_CLIENT_ID": "@google_client_id"
+      "REACT_APP_API_URL": "https://coffeeshop-h6hk.onrender.com/api",
+      "REACT_APP_BACKEND_URL": "https://coffeeshop-h6hk.onrender.com",
+      "REACT_APP_GOOGLE_CLIENT_ID": "715685911320-ar5soc2f1ggkqv2ivesl4ob7vaodh6ld.apps.googleusercontent.com"
     }
   }
 }

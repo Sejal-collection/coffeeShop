@@ -5,6 +5,8 @@ import { Navigate } from 'react-router-dom';
 import { updateProfile, addFavoriteOrder, removeFavoriteOrder, addLoyaltyPoints } from '../Store/authSlice';
 import Footer from '../componets/footer';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+
 const Profile = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
@@ -51,7 +53,7 @@ const Profile = () => {
   const loadUserStats = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/auth/profile/stats', {
+      const response = await fetch(`${API_URL}/auth/profile/stats`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -69,7 +71,7 @@ const Profile = () => {
   const loadUserOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/orders', {
+      const response = await fetch(`${API_URL}/orders`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -135,7 +137,7 @@ const Profile = () => {
   const removeFavorite = async (index) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5001/api/auth/favorites/${index}`, {
+      const response = await fetch(`${API_URL}/auth/favorites/${index}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -158,7 +160,7 @@ const Profile = () => {
   const addToFavorites = async (item) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/auth/favorites', {
+      const response = await fetch(`${API_URL}/auth/favorites`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
