@@ -40,28 +40,30 @@ function LoginPage() {
     setIsLoading(true);
     
     try {
-      // You can add your existing API login logic here
-      // For now, using the simple Redux login action
-      
-      // Simulate API call (replace with your actual login API)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Store user data in localStorage for compatibility
-      const userData = {
-        email: email,
-        name: email.split('@')[0], // Simple name extraction
-        loginMethod: 'email',
-        loginTime: new Date().toISOString()
-      };
-      
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      dispatch(login()); // This updates Redux state
-      toast.success("Login successful!");
-      navigate("/home");
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store token and user data
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+        dispatch(login(data.user)); // Pass user data to Redux
+        toast.success("Login successful!");
+        navigate("/home");
+      } else {
+        toast.error(data.message || "Login failed. Please check your credentials.");
+      }
       
     } catch (error) {
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please check your connection.");
       console.error("Login error:", error);
     } finally {
       setIsLoading(false);

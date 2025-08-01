@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,29 +59,30 @@ function SignupPage() {
     setIsLoading(true);
     
     try {
-      // You can add your registration API logic here
-      // For now, using the simple Redux login action
-      
-      // Simulate API call (replace with your actual registration API)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Store user data in localStorage for compatibility
-      const userData = {
-        email: email,
-        name: name,
-        loginMethod: 'email',
-        registrationDate: new Date().toISOString(),
-        loyaltyPoints: 100 // Welcome bonus
-      };
-      
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      dispatch(login()); // This updates Redux state
-      toast.success("Account created successfully! Welcome to MsCafe!");
-      navigate("/home");
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store token and user data
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+        dispatch(login(data.user)); // Pass user data to Redux
+        toast.success("Account created successfully! Welcome to MsCafe!");
+        navigate("/home");
+      } else {
+        toast.error(data.message || "Registration failed. Please try again.");
+      }
       
     } catch (error) {
-      toast.error("Registration failed. Please try again.");
+      toast.error("Registration failed. Please check your connection.");
       console.error("Registration error:", error);
     } finally {
       setIsLoading(false);
