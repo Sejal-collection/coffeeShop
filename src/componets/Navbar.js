@@ -338,7 +338,10 @@ function Navbar() {
     { title: "About", path: "/about" },
     { title: "Stories", path: "/stories" },
     { title: "Contact", path: "/contact" },
-    { title: "Feedback", path: "/feedback" }
+    { title: "Feedback", path: "/feedback" },
+    { title: "Shop", path: "/shop" },
+    
+
   ];
 
   return (
