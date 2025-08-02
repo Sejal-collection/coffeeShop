@@ -8,6 +8,7 @@ MsCafe was founded with a simple mission: to serve the best coffee in town. Our 
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Known Issues](#known-issues)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
@@ -156,6 +157,22 @@ Once the server is running, you can view the app at (http://localhost:3000).
 - **View Coffee Menu:** Browse through the available coffee items on the homepage.
 - **Learn About Coffee:** Check out the sourcing section to learn more about our sustainably sourced beans.
 - **Place an Order:** In future releases, you'll be able to add items to the cart and complete orders.
+
+## Known Issues
+
+### 1. Edit Profile Button Not Functional
+
+The **Edit Profile** button on the user profile screen is currently non-functional, clicking or tapping it does not trigger any visible action.
+
+#### Possible Causes
+- The button may lack an `onClick` or equivalent event handler
+- The navigation route to the Edit Profile screen may be missing or misconfigured
+- The Edit Profile screen/component might not be implemented or properly linked
+
+#### Suggested Troubleshooting
+- Check if the button has a correctly assigned event handler
+- Verify that navigation to the Edit Profile screen is set up and routed properly
+- Confirm that the target screen/component exists and is integrated into the navigation system
 
 ## ScreenShots
 ## **Home Page:** 
