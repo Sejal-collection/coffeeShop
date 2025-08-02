@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { color, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Button from '../componets/Button';
 
 const AboutContainer = styled.div`

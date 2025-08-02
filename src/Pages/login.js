@@ -5,6 +5,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import { login, googleLogin, clearError } from "../Store/authSlice";
 import { toast } from 'react-toastify';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+
 function LoginPage() {
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
@@ -40,7 +42,8 @@ function LoginPage() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('/api/auth/login', {
+      console.log('🔗 Using API URL:', API_URL);
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

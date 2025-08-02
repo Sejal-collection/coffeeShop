@@ -6,6 +6,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import { login, googleLogin, clearError } from "../Store/authSlice";
 import { toast } from 'react-toastify';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+
 function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -59,7 +61,8 @@ function SignupPage() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('/api/auth/register', {
+      console.log('🔗 Using API URL:', API_URL);
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

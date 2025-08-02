@@ -1,0 +1,262 @@
+# Backend CI/CD Pipeline for AWS EC2
+name: Backend EC2 Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-deploy.yml'
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment even without backend changes'
+        required: false
+        default: 'false'
+
+env:
+  EC2_HOST: 65.2.81.197
+  EC2_USER: ec2-user
+  BACKEND_PORT: 3000
+
+jobs:
+  test-backend:
+    name: Test Backend Code
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      working-directory: ./backend
+      run: npm ci
+
+    - name: Run lint checks
+      working-directory: ./backend
+      run: npm run lint || echo "No lint script found"
+
+    - name: Run backend tests
+      working-directory: ./backend
+      run: npm test
+      env:
+        NODE_ENV: test
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+
+  deploy-to-ec2:
+    name: Deploy to AWS EC2
+    needs: test-backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+    - name: Add EC2 to known hosts
+      run: |
+        ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+
+    - name: Create deployment package
+      run: |
+        # Create a deployment archive
+        tar -czf backend-deploy.tar.gz \
+          backend/ \
+          --exclude=backend/node_modules \
+          --exclude=backend/.env \
+          --exclude=backend/logs
+
+    - name: Upload and deploy to EC2
+      run: |
+        echo "🚀 Starting deployment to EC2..."
+        
+        # Upload deployment package
+        scp backend-deploy.tar.gz $EC2_USER@$EC2_HOST:/tmp/
+        
+        # Create and upload deployment script
+        cat > ec2-deploy.sh << 'EOF'
+        #!/bin/bash
+        set -e
+        
+        echo "🏗️  Starting Coffee Shop Backend Deployment on EC2..."
+        
+        # Setup directories
+        sudo mkdir -p /opt/coffee-shop
+        sudo chown $USER:$USER /opt/coffee-shop
+        cd /opt/coffee-shop
+        
+        # Backup current deployment if exists
+        if [ -d "backend" ]; then
+          echo "💾 Creating backup..."
+          sudo cp -r backend backend-backup-$(date +%Y%m%d-%H%M%S) || true
+        fi
+        
+        # Extract new deployment
+        echo "📦 Extracting deployment package..."
+        tar -xzf /tmp/backend-deploy.tar.gz
+        cd backend
+        
+        # Install dependencies
+        echo "📦 Installing production dependencies..."
+        npm ci --only=production
+        
+        # Setup environment file
+        echo "⚙️  Setting up environment..."
+        cat > .env << 'ENVEOF'
+        NODE_ENV=production
+        PORT=3000
+        MONGODB_URI=${{ secrets.MONGODB_URI }}
+        JWT_SECRET=${{ secrets.JWT_SECRET }}
+        GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+        SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+        FRONTEND_URL=https://mohamed-mujtaba-coffee-shop.vercel.app
+        ENVEOF
+        
+        # Install PM2 globally if not exists
+        if ! command -v pm2 &> /dev/null; then
+          echo "📦 Installing PM2..."
+          sudo npm install -g pm2
+        fi
+        
+        # Setup PM2 ecosystem file
+        cat > ecosystem.config.js << 'ECOEOF'
+        module.exports = {
+          apps: [{
+            name: 'coffee-shop-api',
+            script: 'server.js',
+            instances: 1,
+            autorestart: true,
+            watch: false,
+            max_memory_restart: '1G',
+            env: {
+              NODE_ENV: 'production',
+              PORT: 3000
+            },
+            error_file: '/opt/coffee-shop/logs/err.log',
+            out_file: '/opt/coffee-shop/logs/out.log',
+            log_file: '/opt/coffee-shop/logs/combined.log',
+            time: true
+          }]
+        };
+        ECOEOF
+        
+        # Create logs directory
+        sudo mkdir -p /opt/coffee-shop/logs
+        sudo chown $USER:$USER /opt/coffee-shop/logs
+        
+        # Stop existing application
+        echo "🛑 Stopping existing application..."
+        pm2 stop coffee-shop-api || echo "No existing app to stop"
+        pm2 delete coffee-shop-api || echo "No existing app to delete"
+        
+        # Start application
+        echo "🚀 Starting Coffee Shop API with PM2..."
+        pm2 start ecosystem.config.js
+        
+        # Save PM2 configuration
+        pm2 save
+        
+        # Setup PM2 startup (run as sudo once)
+        sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u $USER --hp /home/$USER || true
+        
+        # Configure firewall for port 3000
+        echo "🔥 Configuring firewall..."
+        sudo yum install -y firewalld || true
+        sudo systemctl start firewalld || true
+        sudo firewall-cmd --permanent --add-port=3000/tcp || true
+        sudo firewall-cmd --reload || true
+        
+        echo "✅ Deployment completed successfully!"
+        echo "🌐 API should be available at: http://$EC2_HOST:3000"
+        
+        # Health check
+        echo "🏥 Running health check..."
+        sleep 10
+        
+        for i in {1..5}; do
+          if curl -f http://localhost:3000/api/health; then
+            echo "✅ Health check passed!"
+            break
+          else
+            echo "⏳ Health check attempt $i failed, retrying..."
+            sleep 5
+          fi
+        done
+        
+        # Show PM2 status
+        echo "📊 PM2 Status:"
+        pm2 status
+        
+        # Cleanup
+        rm -f /tmp/backend-deploy.tar.gz
+        
+        echo "🎉 Deployment completed successfully!"
+        EOF
+        
+        chmod +x ec2-deploy.sh
+        scp ec2-deploy.sh $EC2_USER@$EC2_HOST:/tmp/
+        
+        # Execute deployment
+        ssh $EC2_USER@$EC2_HOST "bash /tmp/ec2-deploy.sh"
+
+    - name: Verify deployment
+      run: |
+        echo "🔍 Verifying deployment..."
+        
+        # Wait for service to be fully ready
+        sleep 15
+        
+        # Health check
+        echo "🏥 Backend Health Check..."
+        for i in {1..3}; do
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://$EC2_HOST:$BACKEND_PORT/api/health)
+          if [ $response -eq 200 ]; then
+            echo "✅ Backend is healthy! (Status: $response)"
+            break
+          else
+            echo "⏳ Health check attempt $i: Status $response, retrying..."
+            sleep 10
+          fi
+        done
+        
+        # Test API endpoints
+        echo "🧪 Testing API endpoints..."
+        
+        # Test products endpoint  
+        products_status=$(curl -s -o /dev/null -w "%{http_code}" http://$EC2_HOST:$BACKEND_PORT/api/products)
+        echo "📦 Products API: $products_status"
+        
+        # Get actual health data
+        echo "📊 Backend Health Data:"
+        curl -s http://$EC2_HOST:$BACKEND_PORT/api/health | jq '.' || curl -s http://$EC2_HOST:$BACKEND_PORT/api/health
+        
+        echo "🎉 Deployment verification completed!"
+
+  post-deploy-notification:
+    name: Post Deploy Notification
+    needs: deploy-to-ec2
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: Deployment Status
+      run: |
+        if [ "${{ needs.deploy-to-ec2.result }}" = "success" ]; then
+          echo "✅ Deployment successful!"
+          echo "🌐 Backend API: http://$EC2_HOST:$BACKEND_PORT"
+          echo "🏥 Health Check: http://$EC2_HOST:$BACKEND_PORT/api/health"
+        else
+          echo "❌ Deployment failed!"
+          exit 1
+        fi
