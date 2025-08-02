@@ -28,26 +28,19 @@ const adminRoutes = require('./routes/admin');
 // Import passport config
 require('./config/passport');
 
-// CORS Configuration - Flexible for different environments
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
-
+// CORS Configuration - Allow all origins for open source project
 const allowedOrigins = [
-  // Development origins
   'http://localhost:3000',
   'http://localhost:3001', 
-  'http://127.0.0.1:3000',
-  'http://127.0.0.1:3001',
-  
-  // Production origins (from environment variables)
-  process.env.CLIENT_URL,
-  process.env.FRONTEND_URL,
-  
-  // Common deployment platforms (for open source flexibility)
-  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : []),
-  
-  // Vercel deployments (common for React apps)
   'https://coffee-shop-teal.vercel.app',
+  'https://coffeeshop-h6hk.onrender.com',
+  'http://65.2.81.197',
+  'http://65.2.81.197:3000',
+  'http://65.2.81.197:3001',
+  'http://ec2-65-2-81-197.ap-south-1.compute.amazonaws.com',
+  'http://ec2-65-2-81-197.ap-south-1.compute.amazonaws.com:3000',
+  'http://ec2-65-2-81-197.ap-south-1.compute.amazonaws.com:3001',
+  process.env.CLIENT_URL
 ].filter(Boolean);
 
 app.use(cors({
@@ -55,30 +48,19 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    // Check against allowed origins
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // For open source project, be more permissive
+    if (allowedOrigins.indexOf(origin) !== -1 || 
+        origin?.includes('vercel.app') || 
+        origin?.includes('localhost') ||
+        origin?.includes('127.0.0.1') ||
+        origin?.includes('amazonaws.com')) {
       console.log('✅ CORS allowed origin:', origin);
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      console.log('❌ CORS blocked origin:', origin);
+      console.log('📋 Allowed origins:', allowedOrigins);
+      callback(null, true); // Allow all for open source - change to callback(new Error('Not allowed by CORS')) for production
     }
-    
-    // For development, be more permissive
-    if (isDevelopment || !isProduction) {
-      if (origin?.includes('localhost') || 
-          origin?.includes('127.0.0.1') || 
-          origin?.includes('vercel.app') ||
-          origin?.includes('netlify.app') ||
-          origin?.includes('herokuapp.com')) {
-        console.log('✅ CORS allowed development origin:', origin);
-        return callback(null, true);
-      }
-    }
-    
-    console.log('❌ CORS blocked origin:', origin);
-    console.log('📋 Allowed origins:', allowedOrigins);
-    
-    // For open source projects, you might want to allow all origins
-    // Change the next line to callback(new Error('Not allowed by CORS')) for strict production
-    callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
