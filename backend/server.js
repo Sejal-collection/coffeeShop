@@ -23,6 +23,7 @@ const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const reviewRoutes = require('./routes/reviews');
+const adminRoutes = require('./routes/admin');
 
 // Import passport config
 require('./config/passport');
@@ -91,6 +92,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

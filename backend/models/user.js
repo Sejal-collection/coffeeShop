@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
-    sparse: true // Allow null values but still maintain uniqueness
+    unique: true,
+    sparse: true, // This allows multiple null values but unique non-null values
+    default: undefined // Use undefined instead of null to work with sparse index
   },
   name: {
     type: String,
