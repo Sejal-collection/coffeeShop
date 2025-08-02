@@ -1,0 +1,227 @@
+# Coffee Shop CI/CD Pipeline - Frontend & Backend
+name: Coffee Shop Deployment
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  EC2_HOST: 65.2.81.197
+  EC2_USER: ec2-user
+  BACKEND_PORT: 3000
+
+jobs:
+  # Test Frontend
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test -- --coverage --passWithNoTests --watchAll=false
+      env:
+        CI: true
+
+    - name: Build project
+      run: npm run build
+      env:
+        REACT_APP_API_URL: http://65.2.81.197:3000/api
+        REACT_APP_BACKEND_URL: http://65.2.81.197:3000
+        REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files
+        path: build/
+
+  # Test Backend
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install backend dependencies
+      working-directory: ./backend
+      run: npm ci
+
+    - name: Run backend tests
+      working-directory: ./backend
+      run: npm test
+      env:
+        NODE_ENV: test
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+
+  # Deploy Backend to EC2
+  deploy-backend:
+    name: Deploy Backend to EC2
+    needs: [test-frontend, test-backend]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+    - name: Deploy to EC2
+      run: |
+        # Add EC2 to known hosts
+        ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+        
+        # Create deployment script
+        cat > deploy.sh << 'EOF'
+        #!/bin/bash
+        set -e
+        
+        echo "🚀 Starting Coffee Shop Backend Deployment..."
+        
+        # Navigate to project directory
+        cd /home/ec2-user/coffeeShop || {
+          echo "❌ Project directory not found. Cloning repository..."
+          cd /home/ec2-user
+          git clone https://github.com/${{ github.repository }}.git coffeeShop
+          cd coffeeShop
+        }
+        
+        # Pull latest changes
+        echo "📥 Pulling latest changes..."
+        git fetch origin
+        git reset --hard origin/main
+        
+        # Install/Update dependencies
+        echo "📦 Installing backend dependencies..."
+        cd backend
+        npm ci --only=production
+        
+        # Check if PM2 is installed
+        if ! command -v pm2 &> /dev/null; then
+          echo "📦 Installing PM2..."
+          npm install -g pm2
+        fi
+        
+        # Stop existing application
+        echo "🛑 Stopping existing application..."
+        pm2 stop coffee-shop-api || echo "No existing application to stop"
+        pm2 delete coffee-shop-api || echo "No existing application to delete"
+        
+        # Start application with PM2
+        echo "🚀 Starting Coffee Shop API..."
+        pm2 start server.js --name "coffee-shop-api" --env production
+        
+        # Save PM2 configuration
+        pm2 save
+        pm2 startup || true
+        
+        echo "✅ Deployment completed successfully!"
+        echo "🌐 API available at: http://$EC2_HOST:$BACKEND_PORT"
+        
+        # Health check
+        sleep 5
+        curl -f http://localhost:$BACKEND_PORT/api/health && echo "✅ Health check passed!" || echo "❌ Health check failed!"
+        EOF
+        
+        # Make script executable and copy to EC2
+        chmod +x deploy.sh
+        scp deploy.sh $EC2_USER@$EC2_HOST:/tmp/deploy.sh
+        
+        # Execute deployment
+        ssh $EC2_USER@$EC2_HOST "bash /tmp/deploy.sh"
+
+  # Deploy Frontend to Vercel
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    needs: [test-frontend, deploy-backend]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-files
+        path: build/
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Vercel CLI
+      run: npm install -g vercel
+
+    - name: Deploy to Vercel
+      run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+      env:
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        REACT_APP_API_URL: http://65.2.81.197:3000/api
+        REACT_APP_BACKEND_URL: http://65.2.81.197:3000
+        REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+
+  # Health Check
+  health-check:
+    name: Post-Deployment Health Check
+    needs: [deploy-backend, deploy-frontend]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - name: Backend Health Check
+      run: |
+        echo "🏥 Checking backend health..."
+        response=$(curl -s -o /dev/null -w "%{http_code}" http://$EC2_HOST:$BACKEND_PORT/api/health)
+        if [ $response -eq 200 ]; then
+          echo "✅ Backend is healthy!"
+        else
+          echo "❌ Backend health check failed with status: $response"
+          exit 1
+        fi
+        
+    - name: API Endpoints Check
+      run: |
+        echo "🔍 Testing API endpoints..."
+        
+        # Test products endpoint
+        products_response=$(curl -s -o /dev/null -w "%{http_code}" http://$EC2_HOST:$BACKEND_PORT/api/products)
+        if [ $products_response -eq 200 ]; then
+          echo "✅ Products API is working!"
+        else
+          echo "❌ Products API failed with status: $products_response"
+        fi
+        
+        # Test auth endpoints
+        auth_response=$(curl -s -o /dev/null -w "%{http_code}" http://$EC2_HOST:$BACKEND_PORT/api/auth/health || echo "404")
+        echo "📊 Auth endpoint status: $auth_response"
+        
+        echo "🎉 Deployment verification completed!"

@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Coffee Shop Backend - AWS App Runner Deployment'
+
+Parameters:
+  GitHubRepo:
+    Type: String
+    Description: GitHub repository URL
+    Default: https://github.com/Mujtabaa07/coffeeShop
+  
+  MongoDBConnectionString:
+    Type: String
+    Description: MongoDB Atlas connection string
+    NoEcho: true
+  
+  JWTSecret:
+    Type: String
+    Description: JWT Secret for authentication
+    NoEcho: true
+  
+  GoogleClientId:
+    Type: String
+    Description: Google OAuth Client ID
+    NoEcho: true
+  
+  GoogleClientSecret:
+    Type: String
+    Description: Google OAuth Client Secret
+    NoEcho: true
+
+Resources:
+  # IAM Role for App Runner
+  AppRunnerInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: tasks.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
+
+  # App Runner Service
+  CoffeeShopBackend:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: coffeeshop-backend
+      SourceConfiguration:
+        AutoDeploymentsEnabled: true
+        CodeRepository:
+          RepositoryUrl: !Ref GitHubRepo
+          SourceCodeVersion:
+            Type: BRANCH
+            Value: main
+          SourceDirectory: backend
+          CodeConfiguration:
+            ConfigurationSource: CONFIGURATION_FILE
+            CodeConfigurationValues:
+              Runtime: NODEJS_18
+              BuildCommand: npm install
+              StartCommand: npm start
+              Port: 8080
+              RuntimeEnvironmentVariables:
+                NODE_ENV: production
+                MONGODB_URI: !Ref MongoDBConnectionString
+                JWT_SECRET: !Ref JWTSecret
+                GOOGLE_CLIENT_ID: !Ref GoogleClientId
+                GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
+      InstanceConfiguration:
+        Cpu: 0.25 vCPU
+        Memory: 0.5 GB
+        InstanceRoleArn: !GetAtt AppRunnerInstanceRole.Arn
+      HealthCheckConfiguration:
+        Protocol: HTTP
+        Path: /api/health
+        Interval: 10
+        Timeout: 5
+        HealthyThreshold: 1
+        UnhealthyThreshold: 5
+
+Outputs:
+  BackendServiceURL:
+    Description: Coffee Shop Backend Service URL
+    Value: !Sub 'https://${CoffeeShopBackend.ServiceUrl}'
+    Export:
+      Name: !Sub '${AWS::StackName}-BackendURL'
+  
+  ServiceArn:
+    Description: App Runner Service ARN
+    Value: !Ref CoffeeShopBackend
+    Export:
+      Name: !Sub '${AWS::StackName}-ServiceArn'

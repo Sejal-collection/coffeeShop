@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "name": "mscafe-frontend",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot))",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      },
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://coffeeshop-h6hk.onrender.com/api",
+    "REACT_APP_BACKEND_URL": "https://coffeeshop-h6hk.onrender.com",
+    "REACT_APP_GOOGLE_CLIENT_ID": "715685911320-ar5soc2f1ggkqv2ivesl4ob7vaodh6ld.apps.googleusercontent.com"
+  },
+  "build": {
+    "env": {
+      "REACT_APP_API_URL": "https://coffeeshop-h6hk.onrender.com/api",
+      "REACT_APP_BACKEND_URL": "https://coffeeshop-h6hk.onrender.com",
+      "REACT_APP_GOOGLE_CLIENT_ID": "715685911320-ar5soc2f1ggkqv2ivesl4ob7vaodh6ld.apps.googleusercontent.com"
+    }
+  }
+}
