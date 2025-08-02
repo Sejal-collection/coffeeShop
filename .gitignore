@@ -12,22 +12,63 @@
 # production
 /build
 
-# misc
-.DS_Store
+# Environment variables (IMPORTANT: Never commit these to public repos)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
 /backend/.env
-/backend/.env.local
-/backend/.env.development.local
-/backend/.env.test.local
-/backend/.env.production.local
+/backend/.env.*
+!backend/.env.example
 
-# logs
+# Deployment and sensitive files
+*.pem
+*.key
+*deploy*.ps1
+*deploy*.sh
+*fix*.js
+*test*.js
+*verify*.js
+
+# Cloud and deployment configs (keep examples)
+aws-config/
+.aws/
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
+logs/
 
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# IDE files
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Vercel
 .vercel
