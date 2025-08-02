@@ -4,6 +4,18 @@ A modern, full-stack coffee shop e-commerce application built with React.js and 
 
 ![Coffee Shop Banner](./public/3817208_coffee_cup_drink_icon.png)
 
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Known Issues](#known-issues)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 ## 🚀 Features
 
 - **User Authentication**: Email/Password and Google OAuth login
@@ -84,6 +96,7 @@ npm start
 
 ## ⚙️ Environment Configuration
 
+
 ### Backend (.env)
 Create a `.env` file in the `backend/` directory:
 ```env
@@ -93,6 +106,49 @@ GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 PORT=3000
 NODE_ENV=development
+# Or run separately:
+# Backend: cd backend && npm run dev
+# Frontend: npm start
+```
+Once the server is running, you can view the app at (http://localhost:3000).
+
+
+## Usage
+**To use the app:**
+- **View Coffee Menu:** Browse through the available coffee items on the homepage.
+- **Learn About Coffee:** Check out the sourcing section to learn more about our sustainably sourced beans.
+- **Place an Order:** In future releases, you'll be able to add items to the cart and complete orders.
+
+## Known Issues
+
+### 1. Edit Profile Button Not Functional
+
+The **Edit Profile** button on the user profile screen is currently non-functional, clicking or tapping it does not trigger any visible action.
+
+#### Possible Causes
+- The button may lack an `onClick` or equivalent event handler
+- The navigation route to the Edit Profile screen may be missing or misconfigured
+- The Edit Profile screen/component might not be implemented or properly linked
+
+#### Suggested Troubleshooting
+- Check if the button has a correctly assigned event handler
+- Verify that navigation to the Edit Profile screen is set up and routed properly
+- Confirm that the target screen/component exists and is integrated into the navigation system
+
+## ScreenShots
+## **Home Page:** 
+![homepage](https://github.com/user-attachments/assets/2dc9b51d-ce06-4eb6-89fb-774867ede12c)
+## **Coffee Menu:**
+![coffeemenu](https://github.com/user-attachments/assets/014c6a7a-03ab-4bdf-88e1-bb3c11d66447)
+## **Login Page**
+![coffeelogin](https://github.com/user-attachments/assets/c6c7c645-475d-4658-a47c-f0ada0b177d1)
+## **Testimonials**
+![testimonials](https://github.com/user-attachments/assets/38d811e3-4acc-4901-9a3d-8e4185c96a2c)
+
+## Contributing
+We welcome contributions! Follow the steps below to contribute to this project:
+```bash
+# Click the "Fork" button at the top-right of the repository page to create a copy in your GitHub account.
 ```
 
 ### Frontend (.env.local)
