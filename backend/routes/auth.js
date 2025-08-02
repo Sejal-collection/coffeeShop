@@ -176,20 +176,65 @@ router.post('/google', async (req, res) => {
     const payload = ticket.getPayload();
     console.log('✅ Google token verified for:', payload.email);
     
-    // Check if user exists
+    // Check if user exists by googleId first
     let user = await User.findOne({ googleId: payload.sub });
     
     if (!user) {
-      console.log('➕ Creating new user for:', payload.email);
-      // Create new user
-      user = await User.create({
-        googleId: payload.sub,
-        name: payload.name,
-        email: payload.email,
-        avatar: payload.picture,
-        provider: 'google'
-      });
-      console.log('✅ New user created:', user._id);
+      // Check if user exists by email (might be an email-registered user)
+      const existingEmailUser = await User.findOne({ email: payload.email });
+      
+      if (existingEmailUser && !existingEmailUser.googleId) {
+        // Update existing email user with Google info
+        console.log('🔄 Linking Google account to existing email user:', payload.email);
+        user = await User.findByIdAndUpdate(
+          existingEmailUser._id,
+          {
+            googleId: payload.sub,
+            avatar: payload.picture,
+            provider: 'google' // Update provider to indicate Google linking
+          },
+          { new: true }
+        );
+        console.log('✅ Existing user updated with Google info:', user._id);
+      } else if (existingEmailUser && existingEmailUser.googleId) {
+        // User already has Google linked but googleId doesn't match
+        console.log('⚠️ Email already registered with different Google account');
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Email already registered with a different Google account' 
+        });
+      } else {
+        // Create completely new user
+        console.log('➕ Creating new user for:', payload.email);
+        try {
+          user = await User.create({
+            googleId: payload.sub,
+            name: payload.name,
+            email: payload.email,
+            avatar: payload.picture,
+            provider: 'google',
+            loyaltyPoints: 100 // Welcome bonus
+          });
+          console.log('✅ New user created:', user._id);
+        } catch (createError) {
+          if (createError.code === 11000) {
+            // Handle duplicate key error gracefully
+            console.log('🔄 Duplicate key error, trying to find existing user...');
+            user = await User.findOne({ 
+              $or: [
+                { googleId: payload.sub },
+                { email: payload.email }
+              ]
+            });
+            if (!user) {
+              throw createError; // Re-throw if we still can't find the user
+            }
+            console.log('✅ Found existing user after duplicate error:', user._id);
+          } else {
+            throw createError;
+          }
+        }
+      }
     } else {
       console.log('👤 Existing user found:', user._id);
     }

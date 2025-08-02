@@ -28,11 +28,18 @@ const adminRoutes = require('./routes/admin');
 // Import passport config
 require('./config/passport');
 
-// CORS Configuration
+// CORS Configuration - Allow all origins for open source project
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001', 
   'https://coffee-shop-teal.vercel.app',
+  'https://coffeeshop-h6hk.onrender.com',
+  'http://65.2.81.197',
+  'http://65.2.81.197:3000',
+  'http://65.2.81.197:3001',
+  'http://ec2-65-2-81-197.ap-south-1.compute.amazonaws.com',
+  'http://ec2-65-2-81-197.ap-south-1.compute.amazonaws.com:3000',
+  'http://ec2-65-2-81-197.ap-south-1.compute.amazonaws.com:3001',
   process.env.CLIENT_URL
 ].filter(Boolean);
 
@@ -41,16 +48,25 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // For open source project, be more permissive
+    if (allowedOrigins.indexOf(origin) !== -1 || 
+        origin?.includes('vercel.app') || 
+        origin?.includes('localhost') ||
+        origin?.includes('127.0.0.1') ||
+        origin?.includes('amazonaws.com')) {
+      console.log('✅ CORS allowed origin:', origin);
       callback(null, true);
     } else {
       console.log('❌ CORS blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
+      console.log('📋 Allowed origins:', allowedOrigins);
+      callback(null, true); // Allow all for open source - change to callback(new Error('Not allowed by CORS')) for production
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 
 // Middleware
