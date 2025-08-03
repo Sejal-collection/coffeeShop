@@ -48,6 +48,60 @@ A modern, full-stack coffee shop e-commerce application built with React.js and 
 - MongoDB
 - Git
 
+### 📁 Project Structure :
+```
+☕ coffeeShop/
+├── .github/                        # GitHub configuration
+│   ├── ISSUE_TEMPLATE/            # Standardized issue templates
+│   │   ├── Bug-report.yaml
+│   │   ├── Doc.yaml
+│   │   ├── Feature-Request.yaml
+│   │   └── general_issues.yaml
+│   ├── workflow/                  # CI/CD GitHub Actions
+│   │   ├── PRs.yaml
+│   │   ├── auto-comment-pr.yaml
+│   │   ├── auto-comment.yaml
+│   │   ├── autoCloseLinkedIssues.yaml
+│   │   └── main.yaml
+│   └── PULL_REQUEST_TEMPLATE.md   # Template for pull requests
+│
+├── backend/                       # Backend logic and APIs
+│   ├── __tests__/                 # Test suites
+│   ├── config/                    # App configuration and constants
+│   ├── middleware/               # Express middleware (auth, logging, etc.)
+│   ├── models/                    # Mongoose data models
+│   ├── routes/                    # API route handlers
+│   └── seeders/                   # Seed data for DB initialization
+│
+├── public/                        # Static assets like icons and images
+│
+├── src/                           # Frontend source code
+│   ├── Pages/                     # Page-level components for routing
+│   ├── Store/                     # State management (Redux, Zustand, etc.)
+│   ├── components/                # Reusable UI components
+│   ├── services/                  # API interactions and service logic
+│   └── utils/                     # Utility functions
+│       ├── App.css
+│       ├── App.js
+│       ├── App.test.js
+│       ├── index.css
+│       ├── index.js
+│       ├── logo.svg
+│       ├── reportWebVitals.js
+│       └── setupTests.js
+│
+├── .gitignore                     # Specifies files to exclude from git
+├── CODE_OF_CONDUCT.md            # Community standards and behavior
+├── CONTRIBUTING.md               # Guidelines for contributing to the project
+├── LICENSE                       # Legal license (e.g., MIT, Apache)
+├── README.md                     # Entry point for documentation
+├── package-lock.json             # Exact dependency versions
+├── package.json                  # Project metadata and dependencies
+├── postcss.config.js             # CSS transformer configuration
+└── tailwind.config.js            # TailwindCSS styling configuration
+
+```
+----
 ### Installation
 
 1. **Clone the repository**
@@ -193,4 +247,7 @@ If you find this project helpful, please give it a star! ⭐
 
 ---
 
-Made with ❤️ and lots of ☕
+<div align="center" >
+  Made with ❤️ and lots of ☕
+</div>
+
