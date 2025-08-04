@@ -8,12 +8,17 @@ A modern, full-stack coffee shop e-commerce application built with React.js and 
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Project Structure](#project-overview)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Known Issues](#known-issues)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
+
+
+## 🌐 Project Overview
+👉 [Try the app on Vercel](https://coffee-shop-teal.vercel.app)
 
 
 ## 🚀 Features
@@ -48,8 +53,11 @@ A modern, full-stack coffee shop e-commerce application built with React.js and 
 - MongoDB
 - Git
 
+
 ### 📁 Project Structure :
+
 ```
+
 ☕ coffeeShop/
 ├── .github/                        # GitHub configuration
 │   ├── ISSUE_TEMPLATE/            # Standardized issue templates
@@ -99,9 +107,9 @@ A modern, full-stack coffee shop e-commerce application built with React.js and 
 ├── package.json                  # Project metadata and dependencies
 ├── postcss.config.js             # CSS transformer configuration
 └── tailwind.config.js            # TailwindCSS styling configuration
-
 ```
-----
+
+
 ### Installation
 
 1. **Clone the repository**
@@ -228,10 +236,21 @@ REACT_APP_GOOGLE_CLIENT_ID=your-google-client-id
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`) 
-5. Open a Pull Request
+2. Clone your fork locally (`git clone https://github.com/<your-username>/coffeeShop.git
+                            cd coffeeShop`)
+3. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+5. Push to the branch (`git push origin feature/AmazingFeature`) 
+6. Open a Pull Request
+   
+
+##  📌 Contribution Tips
+
+- Use the ISSUE_TEMPLATE for bugs, feature requests, or improvements.
+- Follow the CODE_OF_CONDUCT.md and keep things respectful and inclusive.
+- Review the CONTRIBUTING.md for detailed guidance.
+New to open source? Don’t worry — this project is beginner-friendly! 🌱
+
 
 ## 📄 License
 
